@@ -12,12 +12,10 @@ public class ParserFI extends Parser {
         super(fileName);
     }
 
-    @Override
     public void parse(String fileName) {
 
     }
 
-    @Override
     public void getStats() {
 
     }
