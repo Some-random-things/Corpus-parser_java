@@ -7,7 +7,6 @@ import java.util.HashMap;
  * User: Pavel
  * Date: 22.11.13
  * Time: 10:34
- * To change this template use File | Settings | File Templates.
  */
 public class Sentence {
     public int id;

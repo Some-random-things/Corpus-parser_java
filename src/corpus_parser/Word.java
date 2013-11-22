@@ -5,7 +5,6 @@ package corpus_parser;
  * User: Pavel
  * Date: 22.11.13
  * Time: 10:38
- * To change this template use File | Settings | File Templates.
  */
 public class Word {
     public int dom;
