@@ -9,6 +9,8 @@ import java.util.HashMap;
  * Time: 12:43
  * To change this template use File | Settings | File Templates.
  */
+//          У
+    //Успех
 public class Main {
 
     public static HashMap<String, Integer> stats = new HashMap<String, Integer>();
