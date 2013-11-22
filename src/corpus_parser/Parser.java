@@ -1,6 +1,5 @@
 package corpus_parser;
 
-import javax.xml.parsers.DocumentBuilder;
 import java.util.HashMap;
 
 /**
@@ -31,6 +30,6 @@ public class Parser {
     public void parse(String fileName) {
         //работа с хмл в джава
         //найти аналог хдокумент,
-        DocumentBuilder
+
     }
 }
