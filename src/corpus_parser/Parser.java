@@ -24,11 +24,11 @@ public class Parser {
     private static String WORD_ATTR_LEMMA = "LEMMA";
     private static String WORD_ATTR_LINK = "LINK";
 
-    public Parser() {
+    public Parser(String fileName) {
         parse(fileName);
     }
 
-    public void parse() {
+    public void parse(String fileName) {
         //работа с хмл в джава
         //найти аналог хдокумент,
         DocumentBuilder
