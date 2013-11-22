@@ -1,5 +1,7 @@
 package corpus_parser;
 
+import java.util.HashMap;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Pavel
@@ -8,6 +10,8 @@ package corpus_parser;
  * To change this template use File | Settings | File Templates.
  */
 public class Main {
+
+    public static HashMap<String, Integer> stats = new HashMap<String, Integer>();
 
     public static void main(String[] args) {
         String fileName = "C:\\corpus\\2011\\Alpinizm.tgt";

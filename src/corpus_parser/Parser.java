@@ -12,6 +12,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -83,14 +85,42 @@ public class Parser {
                     sentenceMap.put(s.id, s);
                 }
             }
-
-            System.out.println("SENTENCES SIZE: " + sentenceMap.size());
         } catch (SAXException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ParserConfigurationException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void getStats() {
+        Iterator sentenceIterator = sentenceMap.entrySet().iterator();
+        Iterator wordsIterator;
+
+        while(sentenceIterator.hasNext()) {
+            Map.Entry sentencePair = (Map.Entry) sentenceIterator.next();
+
+            Sentence sentence = (Sentence) sentencePair.getValue();
+            wordsIterator = sentence.wordsMap.entrySet().iterator();
+            while(wordsIterator.hasNext()) {
+                Map.Entry wordsPair = (Map.Entry) wordsIterator.next();
+                Word word = (Word) wordsPair.getValue();
+
+                String bigram;
+                if (word.dom == 0) continue;
+                Word parent = sentence.wordsMap.get(word.dom);
+
+                String delimiter = ">";
+                if (word.id < parent.id) delimiter = "<";
+
+                bigram = word.featValues[0] + delimiter + parent.featValues[0];
+
+                if (Main.stats.containsKey(bigram)) {
+                    Main.stats.put(bigram, Main.stats.get(bigram) + 1);
+                }
+                else Main.stats.put(bigram, 1);
+            }
         }
     }
 }

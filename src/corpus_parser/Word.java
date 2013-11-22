@@ -13,6 +13,7 @@ public class Word {
     public int id;
     public String lemma;
     public String link;
+    public String[] featValues;
 
     public Word(int _dom, String _feat, int _id, String _lemma, String _link)
     {
@@ -21,5 +22,6 @@ public class Word {
         this.id = _id;
         this.lemma = _lemma;
         this.link = _link;
+        this.featValues = this.feat.split(" ");
     }
 }
