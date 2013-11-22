@@ -14,8 +14,10 @@ public class Main {
 
     public static void main(String[] args) {
         String fileName = "C:\\corpus\\2011\\Alpinizm.tgt";
-        ParserEN p = new ParserEN(fileName);
-
+        Parser p = new ParserEN(fileName);
+        p.getStats();
+        // Parser p = new ParserFI(fileName);
+        // p.getStats();
 
     }
 }
