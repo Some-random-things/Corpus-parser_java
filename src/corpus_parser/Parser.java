@@ -1,5 +1,16 @@
 package corpus_parser;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 /**
@@ -10,7 +21,7 @@ import java.util.HashMap;
  * To change this template use File | Settings | File Templates.
  */
 public class Parser {
-    private HashMap<Integer, Sentence> sentenceMap;
+    private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
     private static String XML_NODE_WORD = "W";
     private static String XML_NODE_SENTENCE = "S";
     private static String XML_ROOT_NODE = "_root";
@@ -28,8 +39,58 @@ public class Parser {
     }
 
     public void parse(String fileName) {
-        //работа с хмл в джава
-        //найти аналог хдокумент,
+        File text = new File(fileName);
+        DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder dBuilder = null;
 
+        try {
+            dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(text);
+            doc.getDocumentElement().normalize();
+            NodeList sentences = doc.getElementsByTagName(XML_NODE_SENTENCE);
+
+            for (int i = 0; i < sentences.getLength(); i++) {
+                Node sentenceNode = sentences.item(i);
+
+                if (sentenceNode.getNodeType() == Node.ELEMENT_NODE) {
+                    Element sentenceElement = (Element) sentenceNode;
+                    NodeList words = sentenceElement.getElementsByTagName(XML_NODE_WORD);
+
+                    HashMap<Integer, Word> wordsMap = new HashMap<Integer, Word>();
+
+                    for ( int j = 0; j < words.getLength(); j++) {
+                        Node wordNode = words.item(j);
+                        if(wordNode.getNodeType() == Node.ELEMENT_NODE) {
+                            Element wordElement = (Element) wordNode;
+                            int dom = 0;
+
+                            if(!wordElement.getAttribute(WORD_ATTR_DOM).equals(XML_ROOT_NODE))
+                                dom = Integer.valueOf(wordElement.getAttribute(WORD_ATTR_DOM));
+
+                            Word w = new Word(dom,
+                                    wordElement.getAttribute(WORD_ATTR_FEAT),
+                                    Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)),
+                                    wordElement.getAttribute(WORD_ATTR_LEMMA),
+                                    wordElement.getAttribute(WORD_ATTR_LINK));
+
+                            wordsMap.put(w.id, w);
+                        }
+                    }
+
+                    Sentence s = new Sentence(Integer.valueOf(sentenceElement.getAttribute(SENTENCE_ATTR_ID)),
+                            wordsMap);
+
+                    sentenceMap.put(s.id, s);
+                }
+            }
+
+            System.out.println("SENTENCES SIZE: " + sentenceMap.size());
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        }
     }
 }

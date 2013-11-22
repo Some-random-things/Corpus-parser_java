@@ -1,7 +1,6 @@
 package corpus_parser;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,13 +11,11 @@ import java.util.Map;
  */
 public class Sentence {
     public int id;
-    public String value;
     public HashMap<Integer, Word> wordsMap;
 
-    public Sentence(int _id, String _value, HashMap<Integer, Word> _wordsMap)
+    public Sentence(int _id, HashMap<Integer, Word> _wordsMap)
     {
         this.id = _id;
-        this.value = _value;
         this.wordsMap = _wordsMap;
     }
 }
