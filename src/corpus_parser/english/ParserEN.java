@@ -1,5 +1,9 @@
-package corpus_parser;
+package corpus_parser.english;
 
+import corpus_parser.Main;
+import corpus_parser.Parser;
+import corpus_parser.Sentence;
+import corpus_parser.Word;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -68,13 +72,13 @@ public class ParserEN extends Parser {
                             if(!wordElement.getAttribute(WORD_ATTR_DOM).equals(XML_ROOT_NODE))
                                 dom = Integer.valueOf(wordElement.getAttribute(WORD_ATTR_DOM));
 
-                            Word w = new Word(dom,
+                            Word w = new WordEN(dom,
                                     wordElement.getAttribute(WORD_ATTR_FEAT),
                                     Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)),
                                     wordElement.getAttribute(WORD_ATTR_LEMMA),
                                     wordElement.getAttribute(WORD_ATTR_LINK));
 
-                            wordsMap.put(w.id, w);
+                            wordsMap.put(Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)), w);
                         }
                     }
 
@@ -104,11 +108,11 @@ public class ParserEN extends Parser {
             wordsIterator = sentence.wordsMap.entrySet().iterator();
             while(wordsIterator.hasNext()) {
                 Map.Entry wordsPair = (Map.Entry) wordsIterator.next();
-                Word word = (Word) wordsPair.getValue();
+                WordEN word = (WordEN) wordsPair.getValue();
 
                 String bigram;
                 if (word.dom == 0) continue;
-                Word parent = sentence.wordsMap.get(word.dom);
+                WordEN parent = (WordEN) sentence.wordsMap.get(word.dom);
 
                 String delimiter = ">";
                 if (word.id < parent.id) delimiter = "<";

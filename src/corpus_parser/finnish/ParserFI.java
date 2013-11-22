@@ -1,4 +1,6 @@
-package corpus_parser;
+package corpus_parser.finnish;
+
+import corpus_parser.Parser;
 
 /**
  * Created with IntelliJ IDEA.

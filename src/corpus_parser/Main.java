@@ -1,5 +1,7 @@
 package corpus_parser;
 
+import corpus_parser.english.ParserEN;
+
 import java.util.HashMap;
 
 /**
