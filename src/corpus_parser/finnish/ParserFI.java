@@ -1,6 +1,7 @@
 package corpus_parser.finnish;
 
 import corpus_parser.Parser;
+import corpus_parser.Sentence;
 import corpus_parser.Word;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -23,6 +24,21 @@ import java.util.HashMap;
  */
 public class ParserFI extends Parser {
 
+    private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
+
+    private static String XML_NODE_WORD = "token";
+    private static String XML_NODE_SENTENCE = "sentence";
+
+    private static int SENTENCE_ATTR_ID;
+
+    private static String WORD_ATTR_PROPERTIES = "posreading";
+    private static String WORD_ATTR_DOM = "gov";
+    private static String WORD_ATTR_FEAT = "rawtags";
+    private static String WORD_ATTR_ID = "dep";
+    private static String WORD_ATTR_LEMMA = "baseform";
+    private static String WORD_ATTR_LINK = "type";
+
+
     public ParserFI(String fileName) {
         super(fileName);     //чтойта
     }
@@ -38,54 +54,51 @@ public class ParserFI extends Parser {
             doc.getDocumentElement().normalize();
 
 
-            NodeList sentences = doc.getElementsByTagName("sentence");
+            NodeList sentences = doc.getElementsByTagName(XML_NODE_SENTENCE);
 
             for (int i = 0; i < sentences.getLength(); i++) {
+
 
                 Node sentenceNode = sentences.item(i);
 
                 if (sentenceNode.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element sentenceElement = (Element) sentenceNode;
-                    NodeList words = sentenceElement.getElementsByTagName("token");
-                    NodeList dependencies = sentenceElement.getElementsByTagName("dep");  //пригодится чуть ниже  !!!
+                    NodeList words = sentenceElement.getElementsByTagName(XML_NODE_WORD);
+                    NodeList dependencies = sentenceElement.getElementsByTagName(WORD_ATTR_ID);  //пригодится чуть ниже  !!!
                     HashMap<Integer, Word> wordsMap = new HashMap<Integer, Word>();
 
-                    for ( int j = 0; j < words.getLength(); j++) {
+                    for ( int j = 0; j < words.getLength(); j++) {    //цикл по словам
                         Node wordNode = words.item(j);
 
                         if(wordNode.getNodeType() == Node.ELEMENT_NODE) {
                             Element wordElement = (Element) wordNode;
-                            NodeList features = wordElement.getElementsByTagName("posreading");
+                            NodeList features = wordElement.getElementsByTagName(WORD_ATTR_PROPERTIES);
                             for(int k=0; k< features.getLength(); k++)  {
                                 Node featureNode = features.item(k) ;
                                 if(featureNode.getNodeType() == Node.ELEMENT_NODE)  {
                                     Element featureElement = (Element) featureNode;
-                                    //а теперь начинается огонь прямо из сердца морозной Финляндии
+                                    //далее идет работа с второй частью предложения - списком зависимостей
                                     for(int f = 0; f < dependencies.getLength(); f++) {
                                         Node depNode = dependencies.item(f);
                                         int dom = -1;
                                         String linktype = "";
                                         if (depNode.getNodeType() == Node.ELEMENT_NODE) {
                                             Element depElement = (Element) depNode;
-                                            if (depElement.getAttribute("dep") == String.valueOf(j)) {
-                                                dom = Integer.valueOf(depElement.getAttribute("gov"));
-                                                //gov - main word
+                                            if (depElement.getAttribute(WORD_ATTR_ID) == String.valueOf(j)) {
+                                                dom = Integer.valueOf(depElement.getAttribute(WORD_ATTR_DOM));
                                                 //запилить проверку если нету dep = j - голова не варит
                                             }
-                                            linktype = depElement.getAttribute("type");
-                                            //^если в конструктор передать просто depElement.getAttribute("type") - ругается (я профессионал)
+                                            linktype = depElement.getAttribute(WORD_ATTR_LINK);
+
+                                            Word w = new WordFI(dom,
+                                                    featureElement.getAttribute(WORD_ATTR_FEAT),
+                                                    j,
+                                                    featureElement.getAttribute(WORD_ATTR_LEMMA),
+                                                    linktype);
+                                            wordsMap.put(j, w);      //j - пор. элемент слова в предложении
 
                                         }
-
-                                        //надеюсь что конструктор тут
-
-                                        Word w = new WordFI(dom,
-                                                featureElement.getAttribute("rawtags"),
-                                                j,
-                                                featureElement.getAttribute("baseform"),
-                                                linktype);
-
                                         //WordFI.feat = featureElement.getAttribute("rawtags");
                                         //WordFI.id =  j (or??)
                                         //WordFI.lemma = featureElement.getAttribute("baseform");
@@ -99,15 +112,21 @@ public class ParserFI extends Parser {
                             }
                         }
                     }
+                    SENTENCE_ATTR_ID = i+1;
+
+                    Sentence s = new Sentence(SENTENCE_ATTR_ID,
+                            wordsMap);
+
+                    sentenceMap.put(s.id, s);
                 }
             }
         }
         catch (ParserConfigurationException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (SAXException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
 
     }
