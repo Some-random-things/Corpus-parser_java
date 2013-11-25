@@ -1,6 +1,6 @@
 package corpus_parser;
 
-import corpus_parser.english.ParserEN;
+import corpus_parser.russian.ParserRU;
 
 import java.util.HashMap;
 
@@ -16,7 +16,7 @@ public class Main {
 
     public static void main(String[] args) {
         String fileName = "C:\\corpus\\2011\\Alpinizm.tgt";
-        Parser p = new ParserEN(fileName);
+        Parser p = new ParserRU(fileName);
         p.getStats();
         // Parser p = new ParserFI(fileName);
         // p.getStats();

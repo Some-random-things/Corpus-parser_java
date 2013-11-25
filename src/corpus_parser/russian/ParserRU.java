@@ -1,4 +1,4 @@
-package corpus_parser.english;
+package corpus_parser.russian;
 
 import corpus_parser.Main;
 import corpus_parser.Parser;
@@ -25,7 +25,7 @@ import java.util.Map;
  * Date: 21.11.13
  * Time: 21:43
  */
-public class ParserEN extends Parser {
+public class ParserRU extends Parser {
     private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
     private static String XML_NODE_WORD = "W";
     private static String XML_NODE_SENTENCE = "S";
@@ -39,7 +39,7 @@ public class ParserEN extends Parser {
     private static String WORD_ATTR_LEMMA = "LEMMA";
     private static String WORD_ATTR_LINK = "LINK";
 
-    public ParserEN(String fileName) {
+    public ParserRU(String fileName) {
         super(fileName);
     }
 
@@ -72,7 +72,7 @@ public class ParserEN extends Parser {
                             if(!wordElement.getAttribute(WORD_ATTR_DOM).equals(XML_ROOT_NODE))
                                 dom = Integer.valueOf(wordElement.getAttribute(WORD_ATTR_DOM));
 
-                            Word w = new WordEN(dom,
+                            Word w = new WordRU(dom,
                                     wordElement.getAttribute(WORD_ATTR_FEAT),
                                     Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)),
                                     wordElement.getAttribute(WORD_ATTR_LEMMA),
@@ -108,11 +108,11 @@ public class ParserEN extends Parser {
             wordsIterator = sentence.wordsMap.entrySet().iterator();
             while(wordsIterator.hasNext()) {
                 Map.Entry wordsPair = (Map.Entry) wordsIterator.next();
-                WordEN word = (WordEN) wordsPair.getValue();
+                WordRU word = (WordRU) wordsPair.getValue();
 
                 String bigram;
                 if (word.dom == 0) continue;
-                WordEN parent = (WordEN) sentence.wordsMap.get(word.dom);
+                WordRU parent = (WordRU) sentence.wordsMap.get(word.dom);
 
                 String delimiter = ">";
                 if (word.id < parent.id) delimiter = "<";

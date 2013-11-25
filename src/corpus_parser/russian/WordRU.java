@@ -1,4 +1,4 @@
-package corpus_parser.english;
+package corpus_parser.russian;
 
 import corpus_parser.Word;
 
@@ -8,7 +8,7 @@ import corpus_parser.Word;
  * Date: 22.11.13
  * Time: 22:45
  */
-public class WordEN implements Word {
+public class WordRU implements Word {
     public int dom;
     public String feat;
     public int id;
@@ -16,7 +16,7 @@ public class WordEN implements Word {
     public String link;
     public String[] featValues;
 
-    public WordEN(int _dom, String _feat, int _id, String _lemma, String _link)
+    public WordRU(int _dom, String _feat, int _id, String _lemma, String _link)
     {
         this.dom = _dom;
         this.feat = _feat;
