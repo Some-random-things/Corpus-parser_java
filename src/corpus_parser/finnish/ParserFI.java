@@ -1,5 +1,6 @@
 package corpus_parser.finnish;
 
+import com.mysql.jdbc.MySQLConnection;
 import corpus_parser.Parser;
 import corpus_parser.Sentence;
 import corpus_parser.Word;
@@ -40,10 +41,11 @@ public class ParserFI extends Parser {
 
 
     public ParserFI(String fileName) {
-        super(fileName);     //чтойта
+        super(fileName);
     }
 
     public void parse(String fileName){
+
         File text = new File(fileName);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;
