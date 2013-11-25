@@ -27,10 +27,10 @@ public class Main {
 
     public static HashMap<String, Integer> stats = new HashMap<String, Integer>();
 
-    public static void getFilePaths(final File folder, String language) {
+    public static void setStats(final File folder, String language) {
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
-                getFilePaths(fileEntry, language);
+                setStats(fileEntry, language);
             } else {
                 System.out.println(fileEntry.getAbsolutePath());
                 if(language == "finnish"){
@@ -50,11 +50,11 @@ public class Main {
 
         final File folderFI = new File("C:\\corpus_fin");
         String language = "finnish";
-        getFilePaths(folderFI, language);
+        setStats(folderFI, language);
 
         /*final File folderRU = new File("C:\\corpus");
         String language = "russian";
-        getFilePaths(folderRU, language); */
+        setStats(folderRU, language); */
 
         try {
             FileWriter fw = new FileWriter("C:\\corpus_fi\\results.txt");
@@ -63,7 +63,7 @@ public class Main {
             Iterator<Map.Entry<String, Integer>> it = stats.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<String, Integer> pairs = it.next();
-                out.write(pairs.getKey()+" ; "+pairs.getValue());
+                out.write(pairs.getKey() + " ; " + pairs.getValue());
                 out.newLine();
             }
             out.close();

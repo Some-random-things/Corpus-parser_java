@@ -25,8 +25,10 @@ import java.util.Map;
  * Date: 21.11.13
  * Time: 21:43
  */
-public class ParserRU /*extends Parser*/ {
+public class ParserRU extends Parser {
+
     private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
+
     private static String XML_NODE_WORD = "W";
     private static String XML_NODE_SENTENCE = "S";
     private static String XML_ROOT_NODE = "_root";

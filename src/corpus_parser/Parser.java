@@ -8,10 +8,6 @@ package corpus_parser;
  */
 public abstract class Parser {
 
-    public Parser(String fileName) {
-        parse(fileName);
-    }
-
     public abstract void parse(String fileName);
 
     public abstract void getStats();

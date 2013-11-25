@@ -28,7 +28,7 @@ import java.util.Map;
  * Date: 22.11.13
  * Time: 22:09
  */
-public class ParserFI /*extends Parser*/ {
+public class ParserFI extends Parser {
 
     private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
 
@@ -111,6 +111,7 @@ public class ParserFI /*extends Parser*/ {
                             System.out.println(WordFeatures);
                             System.out.println(j);
                             System.out.println(WordLemma);
+
                             //обработка пустых токенов
                             if(WordFeatures==null ) WordFeatures = "ERROR";
                             if(WordLemma==null) WordLemma = "ERROR";
