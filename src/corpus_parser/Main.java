@@ -2,9 +2,20 @@ package corpus_parser;
 
 import corpus_parser.finnish.ParserFI;
 import corpus_parser.russian.ParserRU;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.BufferedWriter;
 import java.io.File;
-import java.util.HashMap;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -43,7 +54,24 @@ public class Main {
 
         /*final File folderRU = new File("C:\\corpus");
         String language = "russian";
-        getFilePaths(folderRU, language);*/
+        getFilePaths(folderRU, language); */
+
+        try {
+            FileWriter fw = new FileWriter("C:\\corpus_fi\\results.txt");
+            BufferedWriter out = new BufferedWriter(fw);
+
+            Iterator<Map.Entry<String, Integer>> it = stats.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<String, Integer> pairs = it.next();
+                out.write(pairs.getKey()+" ; "+pairs.getValue());
+                out.newLine();
+            }
+            out.close();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
         System.out.println(stats.get("A>V"));

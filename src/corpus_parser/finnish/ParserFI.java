@@ -40,7 +40,7 @@ public class ParserFI /*extends Parser*/ {
     private static String WORD_ATTR_PROPERTIES = "posreading";
     private static String WORD_ATTR_DOM = "gov";
     private static String WORD_ATTR_FEAT = "rawtags";
-    private static String WORD_ATTR_ID = "dep";
+    private static String WORD_ATTR_DEP_ID = "dep";
     private static String WORD_ATTR_LEMMA = "baseform";
     private static String WORD_ATTR_LINK = "type";
 
@@ -72,10 +72,16 @@ public class ParserFI /*extends Parser*/ {
 
                     Element sentenceElement = (Element) sentenceNode;
                     NodeList words = sentenceElement.getElementsByTagName(XML_NODE_WORD);
-                    NodeList dependencies = sentenceElement.getElementsByTagName(WORD_ATTR_ID);  //пригодится чуть ниже  !!!
+                    NodeList dependencies = sentenceElement.getElementsByTagName(WORD_ATTR_DEP_ID);  //пригодится чуть ниже  !!!
                     HashMap<Integer, Word> wordsMap = new HashMap<Integer, Word>();
 
                     for ( int j = 0; j < words.getLength(); j++) {    //цикл по словам
+
+                        int dom = -1;
+                        String WordLinkType = null;
+                        String WordFeatures = null;
+                        String WordLemma = null;
+
                         Node wordNode = words.item(j);
 
                         if(wordNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -85,38 +91,41 @@ public class ParserFI /*extends Parser*/ {
                                 Node featureNode = features.item(k) ;
                                 if(featureNode.getNodeType() == Node.ELEMENT_NODE)  {
                                     Element featureElement = (Element) featureNode;
+                                    WordFeatures = featureElement.getAttribute(WORD_ATTR_FEAT);
+
+                                    WordLemma = featureElement.getAttribute(WORD_ATTR_LEMMA);
                                     //далее идет работа с второй частью предложения - списком зависимостей
                                     for(int f = 0; f < dependencies.getLength(); f++) {
                                         Node depNode = dependencies.item(f);
-                                        int dom = -1;
-                                        String linktype = "";
                                         if (depNode.getNodeType() == Node.ELEMENT_NODE) {
                                             Element depElement = (Element) depNode;
-                                            if (depElement.getAttribute(WORD_ATTR_ID) == String.valueOf(j)) {
+                                            if (Integer.valueOf(depElement.getAttribute(WORD_ATTR_DEP_ID)) == j) {
                                                 dom = Integer.valueOf(depElement.getAttribute(WORD_ATTR_DOM));
-                                                //запилить проверку если нету dep = j - голова не варит
                                             }
-                                            linktype = depElement.getAttribute(WORD_ATTR_LINK);
-
-                                            Word w = new WordFI(dom,
-                                                    featureElement.getAttribute(WORD_ATTR_FEAT),
-                                                    j,
-                                                    featureElement.getAttribute(WORD_ATTR_LEMMA),
-                                                    linktype);
-                                            wordsMap.put(j, w);      //j - пор. элемент слова в предложении
-
+                                            WordLinkType = depElement.getAttribute(WORD_ATTR_LINK);
                                         }
-                                        //WordFI.feat = featureElement.getAttribute("rawtags");
-                                        //WordFI.id =  j (or??)
-                                        //WordFI.lemma = featureElement.getAttribute("baseform");
-                                        //WordFI.dom = dom;
-                                        //WordFI.link = depElement.getAttribute("type");
                                     }
-
-
-
                                 }
                             }
+                            System.out.println(dom);
+                            System.out.println(WordFeatures);
+                            System.out.println(j);
+                            System.out.println(WordLemma);
+                            //обработка пустых токенов
+                            if(WordFeatures==null ) WordFeatures = "ERROR";
+                            if(WordLemma==null) WordLemma = "ERROR";
+                            if(WordLinkType==null) WordLinkType = "ERROR";
+                            //////////////////////////////////////////////
+
+                            Word w = new WordFI(dom,
+                                    WordFeatures,
+                                    j,
+                                    WordLemma,
+                                    WordLinkType);
+
+
+
+                            wordsMap.put(j, w);
                         }
                     }
                     SENTENCE_ATTR_ID = i+1;
@@ -153,7 +162,7 @@ public class ParserFI /*extends Parser*/ {
                 WordFI word = (WordFI) wordsPair.getValue();
 
                 String bigram;
-                if (word.dom == 0) continue;
+                if (word.dom == -1) continue;
                 WordFI parent = (WordFI) sentence.wordsMap.get(word.dom);
 
                 String delimiter = ">";
