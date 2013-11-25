@@ -66,8 +66,8 @@ public class Main {
                 out.write(pairs.getKey() + " ; " + pairs.getValue());
                 out.newLine();
             }
-            out.close();
 
+            out.close();
 
         } catch (IOException e) {
             e.printStackTrace();
