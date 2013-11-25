@@ -1,9 +1,12 @@
 package corpus_parser.finnish;
 
+import com.mysql.jdbc.Driver;
 import com.mysql.jdbc.MySQLConnection;
+import corpus_parser.Main;
 import corpus_parser.Parser;
 import corpus_parser.Sentence;
 import corpus_parser.Word;
+import corpus_parser.russian.WordRU;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -16,6 +19,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,7 +28,7 @@ import java.util.HashMap;
  * Date: 22.11.13
  * Time: 22:09
  */
-public class ParserFI extends Parser {
+public class ParserFI /*extends Parser*/ {
 
     private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
 
@@ -41,7 +46,7 @@ public class ParserFI extends Parser {
 
 
     public ParserFI(String fileName) {
-        super(fileName);
+        parse(fileName);
     }
 
     public void parse(String fileName){
@@ -135,6 +140,32 @@ public class ParserFI extends Parser {
 
 
     public void getStats() {
+        Iterator sentenceIterator = sentenceMap.entrySet().iterator();
+        Iterator wordsIterator;
 
+        while(sentenceIterator.hasNext()) {
+            Map.Entry sentencePair = (Map.Entry) sentenceIterator.next();
+
+            Sentence sentence = (Sentence) sentencePair.getValue();
+            wordsIterator = sentence.wordsMap.entrySet().iterator();
+            while(wordsIterator.hasNext()) {
+                Map.Entry wordsPair = (Map.Entry) wordsIterator.next();
+                WordFI word = (WordFI) wordsPair.getValue();
+
+                String bigram;
+                if (word.dom == 0) continue;
+                WordFI parent = (WordFI) sentence.wordsMap.get(word.dom);
+
+                String delimiter = ">";
+                if (word.id < parent.id) delimiter = "<";
+
+                bigram = word.featValues[0] + delimiter + parent.featValues[0];
+
+                if (Main.stats.containsKey(bigram)) {
+                    Main.stats.put(bigram, Main.stats.get(bigram) + 1);
+                }
+                else Main.stats.put(bigram, 1);
+            }
+        }
     }
 }
