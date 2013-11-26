@@ -57,7 +57,7 @@ public abstract class StatsManagement {
             Iterator<Map.Entry<String, Integer>> it = stats.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<String, Integer> pairs = it.next();
-                out.write(pairs.getKey() + " ; " + pairs.getValue());
+                out.write(pairs.getKey() + ";" + pairs.getValue());
                 out.newLine();
             }
 
