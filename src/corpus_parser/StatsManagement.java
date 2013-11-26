@@ -19,19 +19,28 @@ import java.util.*;
 public abstract class StatsManagement {
     public static Map<String, Integer> stats = new HashMap<String, Integer>();
 
-    public static void getStats(final File folder, String language) {
+    public enum CorpusLanguage {
+        RUSSIAN,
+        FINNISH
+    }
+
+    public static void getStats(final File folder, CorpusLanguage language) {
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
                 getStats(fileEntry, language);
             } else {
                 System.out.println(fileEntry.getAbsolutePath());
                 Parser p = null;
-                if(language == "finnish"){
-                    p = new ParserFI(fileEntry.getAbsolutePath());
+
+                switch(language) {
+                    case RUSSIAN:
+                        p = new ParserRU(fileEntry.getAbsolutePath());
+                        break;
+                    case FINNISH:
+                        p = new ParserFI(fileEntry.getAbsolutePath());
+                        break;
                 }
-                if(language == "russian"){
-                    p = new ParserRU(fileEntry.getAbsolutePath());
-                }
+
                 p.getStats();
             }
         }
