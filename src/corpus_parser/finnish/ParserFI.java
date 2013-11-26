@@ -1,12 +1,12 @@
 package corpus_parser.finnish;
 
-import com.mysql.jdbc.Driver;
-import com.mysql.jdbc.MySQLConnection;
+//import com.mysql.jdbc.Driver;
+//import com.mysql.jdbc.MySQLConnection;
+
 import corpus_parser.Main;
 import corpus_parser.Parser;
 import corpus_parser.Sentence;
 import corpus_parser.Word;
-import corpus_parser.russian.WordRU;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -34,8 +34,6 @@ public class ParserFI extends Parser {
 
     private static String XML_NODE_WORD = "token";
     private static String XML_NODE_SENTENCE = "sentence";
-
-    private static int SENTENCE_ATTR_ID;
 
     private static String WORD_ATTR_PROPERTIES = "posreading";
     private static String WORD_ATTR_DOM = "gov";
@@ -129,9 +127,8 @@ public class ParserFI extends Parser {
                             wordsMap.put(j, w);
                         }
                     }
-                    SENTENCE_ATTR_ID = i+1;
 
-                    Sentence s = new Sentence(SENTENCE_ATTR_ID,
+                    Sentence s = new Sentence(i + 1,
                             wordsMap);
 
                     sentenceMap.put(s.id, s);

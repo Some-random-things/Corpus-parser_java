@@ -2,20 +2,14 @@ package corpus_parser;
 
 import corpus_parser.finnish.ParserFI;
 import corpus_parser.russian.ParserRU;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -33,14 +27,16 @@ public class Main {
                 setStats(fileEntry, language);
             } else {
                 System.out.println(fileEntry.getAbsolutePath());
+
+                Parser p = null;
                 if(language == "finnish"){
-                    ParserFI p = new ParserFI(fileEntry.getAbsolutePath());
-                    p.getStats();
+                    p = new ParserFI(fileEntry.getAbsolutePath());
                 }
                 if(language == "russian"){
-                    ParserRU p = new ParserRU(fileEntry.getAbsolutePath());
-                    p.getStats();
+                    p = new ParserRU(fileEntry.getAbsolutePath());
                 }
+
+                p.getStats();
             }
         }
     }
