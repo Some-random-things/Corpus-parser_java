@@ -1,12 +1,9 @@
 package corpus_parser.finnish;
 
-import com.mysql.jdbc.Driver;
-import com.mysql.jdbc.MySQLConnection;
 import corpus_parser.Main;
 import corpus_parser.Parser;
 import corpus_parser.Sentence;
 import corpus_parser.Word;
-import corpus_parser.russian.WordRU;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -21,6 +18,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+/*import com.mysql.jdbc.Driver;
+import com.mysql.jdbc.MySQLConnection; */
 
 /**
  * Created with IntelliJ IDEA.

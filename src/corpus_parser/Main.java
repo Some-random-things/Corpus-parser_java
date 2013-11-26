@@ -1,21 +1,7 @@
 package corpus_parser;
 
-import corpus_parser.finnish.ParserFI;
-import corpus_parser.russian.ParserRU;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,53 +12,21 @@ import java.util.*;
 public class Main {
 
     public static HashMap<String, Integer> stats = new HashMap<String, Integer>();
-
-    public static void setStats(final File folder, String language) {
-        for (final File fileEntry : folder.listFiles()) {
-            if (fileEntry.isDirectory()) {
-                setStats(fileEntry, language);
-            } else {
-                System.out.println(fileEntry.getAbsolutePath());
-                if(language == "finnish"){
-                    ParserFI p = new ParserFI(fileEntry.getAbsolutePath());
-                    p.getStats();
-                }
-                if(language == "russian"){
-                    ParserRU p = new ParserRU(fileEntry.getAbsolutePath());
-                    p.getStats();
-                }
-            }
-        }
-    }
-
-
+    public static String language;
+    public static String resultsPath;
     public static void main(String[] args) {
 
         final File folderFI = new File("C:\\corpus_fin");
-        String language = "finnish";
-        setStats(folderFI, language);
+        resultsPath = "C:\\corpus_fi\\results_fin.txt";
+        language = "finnish";
+        StatsManagement.getStats(folderFI, language);
 
         /*final File folderRU = new File("C:\\corpus");
-        String language = "russian";
-        setStats(folderRU, language); */
+        resultsPath = "C:\\corpus_results\\results_ru.txt";
+        language = "russian";
+        StatsManagement.getStats(folderRU, language); */
 
-        try {
-            FileWriter fw = new FileWriter("C:\\corpus_fi\\results.txt");
-            BufferedWriter out = new BufferedWriter(fw);
-
-            Iterator<Map.Entry<String, Integer>> it = stats.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry<String, Integer> pairs = it.next();
-                out.write(pairs.getKey() + " ; " + pairs.getValue());
-                out.newLine();
-            }
-
-            out.close();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        StatsManagement.writeStats(resultsPath);
 
         System.out.println(stats.get("A>V"));
 
