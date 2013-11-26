@@ -24,14 +24,14 @@ public abstract class StatsManagement {
                 getStats(fileEntry, language);
             } else {
                 System.out.println(fileEntry.getAbsolutePath());
+                Parser p = null;
                 if(language == "finnish"){
-                    ParserFI p = new ParserFI(fileEntry.getAbsolutePath());
-                    p.getStats();
+                    p = new ParserFI(fileEntry.getAbsolutePath());
                 }
                 if(language == "russian"){
-                    ParserRU p = new ParserRU(fileEntry.getAbsolutePath());
-                    p.getStats();
+                    p = new ParserRU(fileEntry.getAbsolutePath());
                 }
+                p.getStats();
             }
         }
     }

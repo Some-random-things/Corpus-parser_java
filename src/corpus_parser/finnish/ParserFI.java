@@ -32,8 +32,6 @@ public class ParserFI extends Parser {
     private static String XML_NODE_WORD = "token";
     private static String XML_NODE_SENTENCE = "sentence";
 
-    private static int SENTENCE_ATTR_ID;
-
     private static String WORD_ATTR_PROPERTIES = "posreading";
     private static String WORD_ATTR_DOM = "gov";
     private static String WORD_ATTR_FEAT = "rawtags";
@@ -126,9 +124,7 @@ public class ParserFI extends Parser {
                             wordsMap.put(j, w);
                         }
                     }
-                    SENTENCE_ATTR_ID = i+1;
-
-                    Sentence s = new Sentence(SENTENCE_ATTR_ID,
+                    Sentence s = new Sentence(i+1,
                             wordsMap);
 
                     sentenceMap.put(s.id, s);
