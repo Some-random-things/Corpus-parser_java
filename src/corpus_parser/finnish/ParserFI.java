@@ -19,9 +19,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-/*import com.mysql.jdbc.Driver;
-import com.mysql.jdbc.MySQLConnection; */
-
 /**
  * Created with IntelliJ IDEA.
  * User: imilka
