@@ -7,8 +7,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,6 +17,8 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class StatsManagement {
+    public static Map<String, Integer> stats = new HashMap<String, Integer>();
+
     public static void getStats(final File folder, String language) {
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
@@ -36,12 +37,15 @@ public abstract class StatsManagement {
         }
     }
 
-    public static void writeStats(String resultsPath){
+    public static void writeStats(String resultsPath, boolean toSort){
+
+        if(toSort) sortMap();
+
         try {
             FileWriter fw = new FileWriter(resultsPath);
             BufferedWriter out = new BufferedWriter(fw);
 
-            Iterator<Map.Entry<String, Integer>> it = Main.stats.entrySet().iterator();
+            Iterator<Map.Entry<String, Integer>> it = stats.entrySet().iterator();
             while (it.hasNext()) {
                 Map.Entry<String, Integer> pairs = it.next();
                 out.write(pairs.getKey() + " ; " + pairs.getValue());
@@ -54,5 +58,28 @@ public abstract class StatsManagement {
             e.printStackTrace();
         }
 
+    }
+
+    private static void sortMap() {
+        ValueComparator bvc =  new ValueComparator(stats);
+        TreeMap<String,Integer> sorted_map = new TreeMap<String,Integer>(bvc);
+        sorted_map.putAll(stats);
+        stats = sorted_map;
+    }
+
+    static class ValueComparator implements Comparator<String> {
+
+        Map<String, Integer> base;
+        public ValueComparator(Map<String, Integer> base) {
+            this.base = base;
+        }
+
+        public int compare(String a, String b) {
+            if (base.get(a) >= base.get(b)) {
+                return -1;
+            } else {
+                return 1;
+            }
+        }
     }
 }

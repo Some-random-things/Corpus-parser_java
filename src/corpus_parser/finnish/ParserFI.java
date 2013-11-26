@@ -1,9 +1,6 @@
 package corpus_parser.finnish;
 
-import corpus_parser.Main;
-import corpus_parser.Parser;
-import corpus_parser.Sentence;
-import corpus_parser.Word;
+import corpus_parser.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -164,10 +161,10 @@ public class ParserFI extends Parser {
 
                 bigram = word.featValues[0] + delimiter + parent.featValues[0];
 
-                if (Main.stats.containsKey(bigram)) {
-                    Main.stats.put(bigram, Main.stats.get(bigram) + 1);
+                if (StatsManagement.stats.containsKey(bigram)) {
+                    StatsManagement.stats.put(bigram, StatsManagement.stats.get(bigram) + 1);
                 }
-                else Main.stats.put(bigram, 1);
+                else StatsManagement.stats.put(bigram, 1);
             }
         }
     }
