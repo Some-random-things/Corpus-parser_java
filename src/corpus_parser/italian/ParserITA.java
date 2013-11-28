@@ -20,7 +20,6 @@ import java.util.*;
 public class ParserITA extends Parser {
 
     private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
-    public static String[] l;
     public ParserITA(String fileName){
         parse(fileName);
     }
@@ -59,8 +58,8 @@ public class ParserITA extends Parser {
                         }
                     }
                     if(WordFeatures.length()==0) WordFeatures="ERROR ERROR";
-                    if(WordDependency==null)WordDependency="ERROR";
-                    if(WordDependency.length()<5)WordDependency="[0;0]";
+                    if(WordDependency==null) WordDependency="ERROR";
+                    if(WordDependency.length()<5) WordDependency="[0;0]";
                 System.out.println(WordID);
                 System.out.println(WordFeatures);
                 System.out.println(WordDependency);
