@@ -25,6 +25,8 @@ import java.util.Map;
 public class ParserFI extends Parser {
 
     private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
+    private Document doc;
+    private DatabaseHelper dbhelper;
 
     private static String XML_NODE_WORD = "token";
     private static String XML_NODE_SENTENCE = "sentence";
@@ -37,21 +39,29 @@ public class ParserFI extends Parser {
     private static String WORD_ATTR_LINK = "type";
 
 
-    public ParserFI(String fileName) {
-        parse(fileName);
-    }
+    public ParserFI(String fileName, DatabaseHelper _dbhelper) {
 
-    public void parse(String fileName){
+        this.dbhelper = _dbhelper;
 
         File text = new File(fileName);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;
-
         try {
             dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(text);
-            doc.getDocumentElement().normalize();
+            this.doc = dBuilder.parse(text);
+            this.doc.getDocumentElement().normalize();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        parse(fileName);
+    }
+
+    public void parse(String fileName){
 
             NodeList sentences = doc.getElementsByTagName(XML_NODE_SENTENCE);
 
@@ -127,15 +137,6 @@ public class ParserFI extends Parser {
                     sentenceMap.put(s.id, s);
                 }
             }
-        }
-        catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
 

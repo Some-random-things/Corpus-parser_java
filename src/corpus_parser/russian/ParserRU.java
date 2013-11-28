@@ -25,10 +25,22 @@ import java.util.Map;
 public class ParserRU extends Parser {
 
     private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
+    private Document doc;
+    private DatabaseHelper dbhelper;
 
+
+    private static String XML_NODE_TEXT = "text";
     private static String XML_NODE_WORD = "W";
     private static String XML_NODE_SENTENCE = "S";
     private static String XML_ROOT_NODE = "_root";
+
+    private static String TEXT_NODE_ANNOT = "annot";
+    private static String TEXT_NODE_AUTHOR = "author";
+    private static String TEXT_NODE_EDITOR = "editor";
+    private static String TEXT_NODE_SOURCE = "source";
+    private static String TEXT_NODE_TITLE = "title";
+    private static String TEXT_NODE_DATE = "date";
+    private static String TEXT_ATTR_PATH = "DB_PATH";
 
     private static String SENTENCE_ATTR_ID = "ID";
 
@@ -38,19 +50,50 @@ public class ParserRU extends Parser {
     private static String WORD_ATTR_LEMMA = "LEMMA";
     private static String WORD_ATTR_LINK = "LINK";
 
-    public ParserRU(String fileName) {
-        parse(fileName);
-    }
+    public ParserRU(String fileName, DatabaseHelper _dbhelper)  {
 
-    public void parse(String fileName) {
+        this.dbhelper = _dbhelper;
+
         File text = new File(fileName);
         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;
-
         try {
             dBuilder = dbFactory.newDocumentBuilder();
-            Document doc = dBuilder.parse(text);
-            doc.getDocumentElement().normalize();
+            this.doc = dBuilder.parse(text);
+            this.doc.getDocumentElement().normalize();
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        parse(fileName);
+    }
+
+    protected String getString(String tagName, Document element) {
+        NodeList list = element.getElementsByTagName(tagName);
+        if (list != null && list.getLength() > 0) {
+            NodeList subList = list.item(0).getChildNodes();
+
+            if (subList != null && subList.getLength() > 0) {
+                return subList.item(0).getNodeValue();
+            }
+        }
+        return null;
+    }
+
+    public void parse(String fileName) {
+
+            this.dbhelper.insertText(getString(TEXT_NODE_ANNOT, doc),
+                    getString(TEXT_NODE_AUTHOR, doc),
+                    getString(TEXT_NODE_EDITOR, doc),
+                    getString(TEXT_NODE_SOURCE, doc),
+                    getString(TEXT_NODE_TITLE, doc),
+                    getString(fileName, doc));
+
             NodeList sentences = doc.getElementsByTagName(XML_NODE_SENTENCE);
 
             for (int i = 0; i < sentences.getLength(); i++) {
@@ -87,13 +130,6 @@ public class ParserRU extends Parser {
                     sentenceMap.put(s.id, s);
                 }
             }
-        } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParserConfigurationException e) {
-            e.printStackTrace();
-        }
     }
 
     public void getStats() {

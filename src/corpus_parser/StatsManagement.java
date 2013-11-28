@@ -26,20 +26,19 @@ public abstract class StatsManagement {
         ITALIAN
     }
 
-    public static void getStats(final File folder, CorpusLanguage language) {
+    public static void getStats(final File folder, CorpusLanguage language, DatabaseHelper _dbhelper) {
         for (final File fileEntry : folder.listFiles()) {
             if (fileEntry.isDirectory()) {
-                getStats(fileEntry, language);
+                getStats(fileEntry, language, _dbhelper);
             } else {
                 System.out.println(fileEntry.getAbsolutePath());
                 Parser p = null;
-
                 switch(language) {
                     case RUSSIAN:
-                        p = new ParserRU(fileEntry.getAbsolutePath());
+                        p = new ParserRU(fileEntry.getAbsolutePath(), _dbhelper);
                         break;
                     case FINNISH:
-                        p = new ParserFI(fileEntry.getAbsolutePath());
+                        p = new ParserFI(fileEntry.getAbsolutePath(), _dbhelper);
                         break;
                     case ITALIAN:
                         p = new ParserITA(fileEntry.getAbsolutePath());
