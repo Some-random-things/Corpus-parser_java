@@ -1,6 +1,7 @@
 package corpus_parser;
 
 import corpus_parser.finnish.ParserFI;
+import corpus_parser.italian.ParserITA;
 import corpus_parser.russian.ParserRU;
 
 import java.io.BufferedWriter;
@@ -21,7 +22,8 @@ public abstract class StatsManagement {
 
     public enum CorpusLanguage {
         RUSSIAN,
-        FINNISH
+        FINNISH,
+        ITALIAN
     }
 
     public static void getStats(final File folder, CorpusLanguage language) {
@@ -39,8 +41,10 @@ public abstract class StatsManagement {
                     case FINNISH:
                         p = new ParserFI(fileEntry.getAbsolutePath());
                         break;
+                    case ITALIAN:
+                        p = new ParserITA(fileEntry.getAbsolutePath());
+                        break;
                 }
-
                 p.getStats();
             }
         }

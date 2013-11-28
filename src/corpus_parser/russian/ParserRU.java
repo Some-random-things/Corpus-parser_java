@@ -82,7 +82,7 @@ public class ParserRU extends Parser {
                     }
 
                     Sentence s = new Sentence(Integer.valueOf(sentenceElement.getAttribute(SENTENCE_ATTR_ID)),
-                            wordsMap);
+                            wordsMap,null);
 
                     sentenceMap.put(s.id, s);
                 }

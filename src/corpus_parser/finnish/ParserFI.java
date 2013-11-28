@@ -122,7 +122,7 @@ public class ParserFI extends Parser {
                         }
                     }
                     Sentence s = new Sentence(i+1,
-                            wordsMap);
+                            wordsMap,null);
 
                     sentenceMap.put(s.id, s);
                 }

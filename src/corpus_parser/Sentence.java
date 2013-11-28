@@ -11,10 +11,12 @@ import java.util.HashMap;
 public class Sentence {
     public int id;
     public HashMap<Integer, Word> wordsMap;
+    public HashMap<Double, Word> wordsMapDouble;
 
-    public Sentence(int _id, HashMap<Integer, Word> _wordsMap)
+    public Sentence(int _id, HashMap<Integer, Word> _wordsMap, HashMap<Double, Word> _wordsMapDouble)
     {
         this.id = _id;
-        this.wordsMap = _wordsMap;
+        if(_wordsMapDouble==null) this.wordsMap = _wordsMap;
+        if(_wordsMap==null) this.wordsMapDouble = _wordsMapDouble;
     }
 }
