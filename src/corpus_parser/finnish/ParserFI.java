@@ -157,10 +157,14 @@ public class ParserFI extends Parser {
                 if (word.dom == -1) continue;
                 WordFI parent = (WordFI) sentence.wordsMap.get(word.dom);
 
-                String delimiter = ">";
-                if (word.id < parent.id) delimiter = "<";
+                if(word.id < parent.id) {
+                    String delimiter = "<";
+                    bigram = word.featValues[0] + delimiter + parent.featValues[0];
+                } else {
+                    String delimiter = ">";
+                    bigram = parent.featValues[0] + delimiter + word.featValues[0];
+                }
 
-                bigram = word.featValues[0] + delimiter + parent.featValues[0];
 
                 if (StatsManagement.stats.containsKey(bigram)) {
                     StatsManagement.stats.put(bigram, StatsManagement.stats.get(bigram) + 1);

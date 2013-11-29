@@ -1,11 +1,9 @@
 package corpus_parser.italian;
 
-import com.sun.xml.internal.ws.client.SenderException;
 import corpus_parser.Parser;
 import corpus_parser.Sentence;
 import corpus_parser.StatsManagement;
 import corpus_parser.Word;
-import corpus_parser.finnish.WordFI;
 
 import java.io.*;
 import java.util.*;
@@ -34,46 +32,57 @@ public class ParserITA extends Parser {
                 listOfWords.add(tmp);
             }
             int sentenceCount = 0;
+
             HashMap<Double, Word> wordsMapDouble = new HashMap<Double,Word>();
             for (String word: listOfWords) {
-                if(word!=null && word.length()!=0 && word.substring(0,1).matches("[0-9]")){  //если строка не пустая и не звездочки
-                double WordID;
-                String WordFeatures=null;
-                String WordDependency;
-                String[] splittedWord = word.split(" ");
-                WordID = Double.valueOf(splittedWord[0]);
-                WordDependency = splittedWord[splittedWord.length-1];
-                    for(int i=0; i<splittedWord.length;i++){
-                        if(splittedWord[i].startsWith("(") && splittedWord[i].length()>=2){
-                            int j=i;
-                            while(!splittedWord[j-1].endsWith(")")) {
-                                if(j!=i) WordFeatures += " "+splittedWord[j];
-                                else     WordFeatures=splittedWord[j];
-                                j++;
+
+                if(word!=null && word.length()!=0 && word.substring(0,1).matches("[0-9]")) {  //если строка не пустая и не звездочки
+                    double WordID;
+                    String WordFeatures=null;
+                    String WordDependency;
+                    String[] splittedWord = word.split(" ");
+                    WordID = Double.valueOf(splittedWord[0]);
+                    WordDependency = splittedWord[splittedWord.length-1];
+                        for(int i=0; i<splittedWord.length;i++){
+                            if(splittedWord[i].startsWith("(") && splittedWord[i].length()>=2){
+                                int j=i;
+                                while(!splittedWord[j-1].endsWith(")")) {
+                                    if(j!=i) WordFeatures += " "+splittedWord[j];
+                                    else     WordFeatures=splittedWord[j];
+                                    j++;
+                                }
                             }
                         }
-                    }
-                    if(WordFeatures==null) WordFeatures="ERROR ERROR";
-                    if(WordDependency==null) WordDependency="ERROR";
-                    if(WordDependency.length()<3) WordDependency="[0;0]";
-                /*System.out.println(WordID);
-                System.out.println(WordFeatures);
-                System.out.println(WordDependency); */
+                        if(WordFeatures==null) WordFeatures="ERROR ERROR";
+                        if(WordDependency==null) WordDependency="ERROR";
+                        if(WordDependency.length()<3) WordDependency="[0;0]";
 
-                WordITA w = new WordITA(WordFeatures, WordID, WordDependency);
-                wordsMapDouble.put(WordID,w);
+                    /*System.out.println("===========");
+                    System.out.println(WordID);
+                    System.out.println(WordFeatures);
+                    System.out.println(WordDependency); */
+
+                    WordITA w = new WordITA(WordFeatures, WordID, WordDependency);
+                    System.out.println("Adding " + w.id + " " + w.dom + " " + w.featValues[1]);
+                    wordsMapDouble.put(WordID,w);
+                    System.out.println("WMDSIZE: " + wordsMapDouble.size());
                 }
+
+                System.out.println("WMDSIZE FINAL SIZE: " + wordsMapDouble.size());
+
                 if(word.contains("* FRASE ")) {
-                    if(sentenceCount!=0) {
-                        Sentence s = new Sentence(sentenceCount,null, wordsMapDouble);
+                    System.out.println(word);
+                    if(sentenceCount != 0) {
+                        Sentence s = new Sentence(sentenceCount, null, wordsMapDouble);
                         sentenceMap.put(sentenceCount, s);
                         wordsMapDouble.clear();
                     }
                     sentenceCount++;
-                    System.out.println("   "+sentenceMap.size());
                 }
             }
 
+            Sentence s = new Sentence(sentenceCount,null, wordsMapDouble);
+            sentenceMap.put(sentenceCount, s);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -92,6 +101,8 @@ public class ParserITA extends Parser {
 
             Sentence sentence = (Sentence) sentencePair.getValue();
             wordsIterator = sentence.wordsMapDouble.entrySet().iterator();
+
+            //System.out.println("=============== Sentence: " + sentence.id);
             while(wordsIterator.hasNext()) {
                 Map.Entry wordsPair = (Map.Entry) wordsIterator.next();
                 WordITA word = (WordITA) wordsPair.getValue();
@@ -99,16 +110,26 @@ public class ParserITA extends Parser {
                 String bigram;
                 if (word.dom == 0) continue;
                 WordITA parent = (WordITA) sentence.wordsMapDouble.get(word.dom);
+                ///System.out.println("Word: " + word.id + " " + word.featValues[1] + " " + word.dom);
+                //System.out.println("Parent: " + parent.id + " " + parent.featValues[1]);
 
-                String delimiter = ">";
-                if (word.id < parent.id) delimiter = "<";
+                if(word.id < parent.id) {
+                    String delimiter = "<";
+                    bigram = word.featValues[1] + delimiter + parent.featValues[1];
+                } else {
+                    String delimiter = ">";
+                    bigram = parent.featValues[1] + delimiter + word.featValues[1];
+                }
 
-                bigram = word.featValues[1] + delimiter + parent.featValues[1];
+                //System.out.println(bigram);
 
                 if (StatsManagement.stats.containsKey(bigram)) {
+                   // System.out.println("Contains " + bigram + ", curr val " + StatsManagement.stats.get(bigram));
                     StatsManagement.stats.put(bigram, StatsManagement.stats.get(bigram) + 1);
+                } else {
+                   // System.out.println("Adding " + bigram);
+                    StatsManagement.stats.put(bigram, 1);
                 }
-                else StatsManagement.stats.put(bigram, 1);
             }
         }
     }

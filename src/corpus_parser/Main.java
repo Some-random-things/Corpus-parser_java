@@ -1,13 +1,6 @@
 package corpus_parser;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
-import corpus_parser.italian.ParserITA;
-
 import java.io.File;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,12 +11,13 @@ import java.sql.SQLException;
 public class Main {
 
     public static void main(String[] args) {
-        DatabaseHelper dbhelper = new DatabaseHelper();
-        try {
+        //DatabaseHelper dbhelper = new DatabaseHelper();
+        /*try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+            e.printStackTrace();
+        }  */
+        DatabaseHelper dbhelper = null;
 
         /*final File folderFI = new File("C:\\corpus\\corpus_fin");
         String resultsPath = "C:\\corpus_fi\\results_fin.csv";
@@ -38,8 +32,8 @@ public class Main {
 
         StatsManagement.getStats(folderFI, StatsManagement.CorpusLanguage.RUSSIAN, dbhelper);
         StatsManagement.writeStats(resultsPath, true); */
-        final File folderITA = new File("C:\\corpus\\corpus_ita");
-        String resultsPath = "C:\\corpus_fi\\results_ita2.csv";
+        final File folderITA = new File("/Users/imilka/Desktop/Corpus/italian");
+        String resultsPath = "/Users/imilka/Desktop/Corpus/italian/results_ita.txt";
 
         StatsManagement.getStats(folderITA, StatsManagement.CorpusLanguage.ITALIAN, dbhelper);
         StatsManagement.writeStats(resultsPath, true);

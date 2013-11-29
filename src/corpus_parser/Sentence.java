@@ -1,6 +1,8 @@
 package corpus_parser;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,6 +19,16 @@ public class Sentence {
     {
         this.id = _id;
         if(_wordsMapDouble==null) this.wordsMap = _wordsMap;
-        if(_wordsMap==null) this.wordsMapDouble = _wordsMapDouble;
+        if(_wordsMap==null) {
+            HashMap<Double, Word> newMap = new HashMap<Double, Word>(_wordsMapDouble.size());
+
+            Iterator wordsIterator = _wordsMapDouble.entrySet().iterator();
+            while(wordsIterator.hasNext()) {
+                Map.Entry wordsPair = (Map.Entry) wordsIterator.next();
+                newMap.put((Double) wordsPair.getKey(), (Word) wordsPair.getValue());
+            }
+
+            this.wordsMapDouble = newMap;
+        }
     }
 }

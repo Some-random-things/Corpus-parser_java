@@ -5,7 +5,6 @@ import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
 
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -36,20 +35,20 @@ public class DatabaseHelper {
     public void insertText(String _annot, String _author,
                            String _editor, String _source, String _title,
                            String _relativePath){
-            try {
-                Statement st = (Statement) c.createStatement();
-                PreparedStatement pst = (PreparedStatement) c.prepareStatement(
-                        "INSERT INTO texts(annot, author, editor, source, title, relativepath) VALUES(?, ?, ?, ?, ?, ?)");
-                pst.setString(1, _annot);
-                pst.setString(2, _author);
-                pst.setString(3, _editor);
-                pst.setString(4, _source);
-                pst.setString(5, _title);
-                pst.setString(6, _relativePath);
-                pst.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
+        try {
+            Statement st = (Statement) c.createStatement();
+            PreparedStatement pst = (PreparedStatement) c.prepareStatement(
+                    "INSERT INTO texts(annot, author, editor, source, title, relativepath) VALUES(?, ?, ?, ?, ?, ?)");
+            pst.setString(1, _annot);
+            pst.setString(2, _author);
+            pst.setString(3, _editor);
+            pst.setString(4, _source);
+            pst.setString(5, _title);
+            pst.setString(6, _relativePath);
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+    }
 }

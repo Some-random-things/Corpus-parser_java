@@ -149,10 +149,18 @@ public class ParserRU extends Parser {
                 if (word.dom == 0) continue;
                 WordRU parent = (WordRU) sentence.wordsMap.get(word.dom);
 
-                String delimiter = ">";
+                /*String delimiter = ">";
                 if (word.id < parent.id) delimiter = "<";
 
-                bigram = word.featValues[0] + delimiter + parent.featValues[0];
+                bigram = word.featValues[0] + delimiter + parent.featValues[0];    */
+
+                if(word.id < parent.id) {
+                    String delimiter = "<";
+                    bigram = word.featValues[0] + delimiter + parent.featValues[0];
+                } else {
+                    String delimiter = ">";
+                    bigram = parent.featValues[0] + delimiter + word.featValues[0];
+                }
 
                 if (StatsManagement.stats.containsKey(bigram)) {
                     StatsManagement.stats.put(bigram, StatsManagement.stats.get(bigram) + 1);

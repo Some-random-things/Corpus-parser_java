@@ -29,5 +29,7 @@ public class WordITA implements Word {
         this.dependencyValues = this.dependency.split(";");
         this.dom = Double.valueOf(dependencyValues[0].substring(1, dependencyValues[0].length()));
         this.link = dependencyValues[1].substring(0, dependencyValues[1].length()-1);
+
+        //System.out.println(featValues[1] + " " + this.dependency + " " + this.dom);
     }
 }
