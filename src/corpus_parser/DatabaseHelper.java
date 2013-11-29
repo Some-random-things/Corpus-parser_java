@@ -28,7 +28,7 @@ public class DatabaseHelper {
             PreparedStatement ptruncate = (PreparedStatement) c.prepareStatement("TRUNCATE TABLE texts");
             ptruncate.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
     }
 
@@ -50,5 +50,39 @@ public class DatabaseHelper {
             e.printStackTrace();
         }
 
+    }
+
+    public void insertWord(int _id, int _dom, String _lemma, String _link, String _word, String _partOfSpeech, String[] _properties, int _sentenceId){
+        try{
+            String generatedStatement = "INSERT INTO words(inernalId, domid, lemma, link, word, partOfSpeech, ";
+
+            int addedValues=0;
+
+            for(int i=0; i< _properties.length; i++){
+                generatedStatement+=_properties[i];
+                addedValues++;
+            }
+            generatedStatement+=") VALUES(?,?,?,?,?,?";
+            for(int i=0;i<addedValues;i++){
+                generatedStatement+=",?";
+            }
+            generatedStatement+=")";
+
+            Statement st = (Statement) c.createStatement();
+            PreparedStatement pst = (PreparedStatement) c.prepareStatement(generatedStatement);
+            pst.setInt(1,_id);
+            pst.setInt(2,_dom);
+            pst.setString(3,_lemma);
+            pst.setString(4,_link);
+            pst.setString(5, _word);
+            pst.setString(6,_partOfSpeech);
+            if(addedValues!=0)
+            for(int i=1;i<=addedValues;i++){
+                pst.setString(i+6,_properties[i-1]);
+            }
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

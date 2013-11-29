@@ -11,32 +11,35 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args) {
-        //DatabaseHelper dbhelper = new DatabaseHelper();
-        /*try {
+        DatabaseHelper dbhelper = new DatabaseHelper();
+        try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }  */
-        DatabaseHelper dbhelper = null;
+        }
+        //DatabaseHelper dbhelper = null;
 
         /*final File folderFI = new File("C:\\corpus\\corpus_fin");
-        String resultsPath = "C:\\corpus_fi\\results_fin.csv";
+        String resultsPath = "C:\\corpus_stats\\results_fin.csv";
 
-        StatsManagement.getStats(folderFI, StatsManagement.CorpusLanguage.FINNISH);
+        StatsManagement.getStats(folderFI, StatsManagement.CorpusLanguage.FINNISH, dbhelper);
         StatsManagement.writeStats(resultsPath, true); */
-        /*Parser p = new ParserITA("C:\\corpus\\corpus_ita\\EUDIR-22nov2010.tut");
-        p.getStats(); */
 
-        /*final File folderFI = new File("C:\\corpus\\corpus_ru");
-        String resultsPath = "C:\\corpus_fi\\results_rus.csv";
+        /////////////////////////////////////////////////////////////
+
+        final File folderFI = new File("C:\\corpus\\corpus_ru");
+        String resultsPath = "C:\\corpus_stats\\results_rus.csv";
 
         StatsManagement.getStats(folderFI, StatsManagement.CorpusLanguage.RUSSIAN, dbhelper);
-        StatsManagement.writeStats(resultsPath, true); */
-        final File folderITA = new File("/Users/imilka/Desktop/Corpus/italian");
-        String resultsPath = "/Users/imilka/Desktop/Corpus/italian/results_ita.txt";
+        StatsManagement.writeStats(resultsPath, true);
+
+        ////////////////////////////////////////////////////////////
+
+        /*final File folderITA = new File("C:\\corpus\\corpus_ita");
+        String resultsPath = "C:\\corpus_stats\\results_ita.csv";
 
         StatsManagement.getStats(folderITA, StatsManagement.CorpusLanguage.ITALIAN, dbhelper);
-        StatsManagement.writeStats(resultsPath, true);
+        StatsManagement.writeStats(resultsPath, true); */
 
     }
 }

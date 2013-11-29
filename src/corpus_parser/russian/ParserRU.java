@@ -10,8 +10,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -24,10 +23,13 @@ import java.util.Map;
  */
 public class ParserRU extends Parser {
 
+    public HashMap<String, String> languageProperties = new HashMap<String, String>();  //все св-ва
     private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
     private Document doc;
     private DatabaseHelper dbhelper;
 
+
+    private static String META_FILE_NAME="C:\\corpus_meta\\parser_ru_meta.txt.txt";
 
     private static String XML_NODE_TEXT = "text";
     private static String XML_NODE_WORD = "W";
@@ -51,6 +53,8 @@ public class ParserRU extends Parser {
     private static String WORD_ATTR_LINK = "LINK";
 
     public ParserRU(String fileName, DatabaseHelper _dbhelper)  {
+
+        getMeta(META_FILE_NAME);
 
         this.dbhelper = _dbhelper;
 
@@ -87,12 +91,12 @@ public class ParserRU extends Parser {
 
     public void parse(String fileName) {
 
-            this.dbhelper.insertText(getString(TEXT_NODE_ANNOT, doc),
+            /* this.dbhelper.insertText(getString(TEXT_NODE_ANNOT, doc),
                     getString(TEXT_NODE_AUTHOR, doc),
                     getString(TEXT_NODE_EDITOR, doc),
                     getString(TEXT_NODE_SOURCE, doc),
                     getString(TEXT_NODE_TITLE, doc),
-                    getString(fileName, doc));
+                    getString(fileName, doc));  */
 
             NodeList sentences = doc.getElementsByTagName(XML_NODE_SENTENCE);
 
@@ -114,11 +118,20 @@ public class ParserRU extends Parser {
                             if(!wordElement.getAttribute(WORD_ATTR_DOM).equals(XML_ROOT_NODE))
                                 dom = Integer.valueOf(wordElement.getAttribute(WORD_ATTR_DOM));
 
-                            Word w = new WordRU(dom,
+                            WordRU w = new WordRU(dom,
                                     wordElement.getAttribute(WORD_ATTR_FEAT),
                                     Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)),
                                     wordElement.getAttribute(WORD_ATTR_LEMMA),
-                                    wordElement.getAttribute(WORD_ATTR_LINK));
+                                    wordElement.getAttribute(WORD_ATTR_LINK),
+                                    this.languageProperties);
+                            this.dbhelper.insertWord(w.id,
+                                    w.dom,
+                                    w.lemma,
+                                    w.link,
+                                    wordElement.getNodeValue(),
+                                    w.featValues[0],
+                                    w.properties,
+                                    i);
 
                             wordsMap.put(Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)), w);
                         }
@@ -149,11 +162,6 @@ public class ParserRU extends Parser {
                 if (word.dom == 0) continue;
                 WordRU parent = (WordRU) sentence.wordsMap.get(word.dom);
 
-                /*String delimiter = ">";
-                if (word.id < parent.id) delimiter = "<";
-
-                bigram = word.featValues[0] + delimiter + parent.featValues[0];    */
-
                 if(word.id < parent.id) {
                     String delimiter = "<";
                     bigram = word.featValues[0] + delimiter + parent.featValues[0];
@@ -169,4 +177,20 @@ public class ParserRU extends Parser {
             }
         }
     }
+
+    public void getMeta(String metaFileName){
+        File text = new File(metaFileName);
+        try{ BufferedReader br = new BufferedReader(new FileReader(text));
+            String metaString;
+            while ((metaString = br.readLine()) != null) {
+                String[] metaStringSplitted = metaString.split(";");
+                this.languageProperties.put(metaStringSplitted[0],metaStringSplitted[1]);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

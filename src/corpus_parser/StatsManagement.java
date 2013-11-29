@@ -18,6 +18,7 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class StatsManagement {
+
     public static Map<String, Integer> stats = new HashMap<String, Integer>();
 
     public enum CorpusLanguage {
