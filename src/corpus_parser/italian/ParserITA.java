@@ -36,44 +36,41 @@ public class ParserITA extends Parser {
             int sentenceCount = 0;
             HashMap<Double, Word> wordsMapDouble = new HashMap<Double,Word>();
             for (String word: listOfWords) {
-
-                if(word.length()!=0 && Character.isDigit(word.charAt(0))){  //если строка не пустая и не звездочки
-
-
+                if(word!=null && word.length()!=0 && word.substring(0,1).matches("[0-9]")){  //если строка не пустая и не звездочки
                 double WordID;
-                String WordFeatures="";
+                String WordFeatures=null;
                 String WordDependency;
                 String[] splittedWord = word.split(" ");
                 WordID = Double.valueOf(splittedWord[0]);
                 WordDependency = splittedWord[splittedWord.length-1];
                     for(int i=0; i<splittedWord.length;i++){
-                        if(splittedWord[i].startsWith("(")){
+                        if(splittedWord[i].startsWith("(") && splittedWord[i].length()>=2){
                             int j=i;
                             while(!splittedWord[j-1].endsWith(")")) {
-                                if(j!=i)
-                                WordFeatures += " "+splittedWord[j];
-                                else WordFeatures+=splittedWord[j];
+                                if(j!=i) WordFeatures += " "+splittedWord[j];
+                                else     WordFeatures=splittedWord[j];
                                 j++;
                             }
                         }
                     }
-                    if(WordFeatures.length()==0) WordFeatures="ERROR ERROR";
+                    if(WordFeatures==null) WordFeatures="ERROR ERROR";
                     if(WordDependency==null) WordDependency="ERROR";
-                    if(WordDependency.length()<5) WordDependency="[0;0]";
-                System.out.println(WordID);
+                    if(WordDependency.length()<3) WordDependency="[0;0]";
+                /*System.out.println(WordID);
                 System.out.println(WordFeatures);
-                System.out.println(WordDependency);
+                System.out.println(WordDependency); */
 
-                Word w = new WordITA(WordFeatures, WordID, WordDependency);
+                WordITA w = new WordITA(WordFeatures, WordID, WordDependency);
                 wordsMapDouble.put(WordID,w);
-
                 }
-                if(word.indexOf("*")>=0) { sentenceCount++;
+                if(word.contains("* FRASE ")) {
                     if(sentenceCount!=0) {
                         Sentence s = new Sentence(sentenceCount,null, wordsMapDouble);
                         sentenceMap.put(sentenceCount, s);
+                        wordsMapDouble.clear();
                     }
-                    continue;
+                    sentenceCount++;
+                    System.out.println("   "+sentenceMap.size());
                 }
             }
 

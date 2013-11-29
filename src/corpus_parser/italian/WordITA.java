@@ -28,6 +28,6 @@ public class WordITA implements Word {
         this.lemma = featValues[0].substring(1, featValues[0].length());
         this.dependencyValues = this.dependency.split(";");
         this.dom = Double.valueOf(dependencyValues[0].substring(1, dependencyValues[0].length()));
-        this.link = dependencyValues[1].substring(0, dependencyValues[1].length()-2);
+        this.link = dependencyValues[1].substring(0, dependencyValues[1].length()-1);
     }
 }
