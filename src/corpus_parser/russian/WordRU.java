@@ -3,7 +3,9 @@ package corpus_parser.russian;
 import corpus_parser.Word;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,7 +24,8 @@ public class WordRU implements Word {
     public String lemma;
     public String link;
     public String[] featValues;
-    public String[] properties;
+    public List<String> properties;
+    public List<String> propertiesValues = new ArrayList<String>();
     public HashMap<String,String> languageProperties;
 
 
@@ -38,13 +41,15 @@ public class WordRU implements Word {
         this.properties = getProperties(_feat);
     }
 
-    public String[] getProperties(String _feat){
+    public List<String> getProperties(String _feat){
            String[] featValues =  _feat.split(" ");
-           String[] existingProperties = null;
-           int j = 0;
-           for(int i = 0; i < featValues.length; i++){
+           List<String> existingProperties = new ArrayList<String>();
+           int currentListSize = 0;
+           for(int i = 1; i < featValues.length; i++){
                if(languageProperties.containsKey(featValues[i])){
-                   existingProperties[j]= languageProperties.get(featValues[i]);
+                   existingProperties.add(currentListSize,languageProperties.get(featValues[i]));
+                   propertiesValues.add(currentListSize, featValues[i]);
+                   currentListSize++;
                }
            }
         return existingProperties;

@@ -63,12 +63,8 @@ public class ParserITA extends Parser {
                     System.out.println(WordDependency); */
 
                     WordITA w = new WordITA(WordFeatures, WordID, WordDependency);
-                    System.out.println("Adding " + w.id + " " + w.dom + " " + w.featValues[1]);
                     wordsMapDouble.put(WordID,w);
-                    System.out.println("WMDSIZE: " + wordsMapDouble.size());
                 }
-
-                System.out.println("WMDSIZE FINAL SIZE: " + wordsMapDouble.size());
 
                 if(word.contains("* FRASE ")) {
                     System.out.println(word);
@@ -101,8 +97,6 @@ public class ParserITA extends Parser {
 
             Sentence sentence = (Sentence) sentencePair.getValue();
             wordsIterator = sentence.wordsMapDouble.entrySet().iterator();
-
-            //System.out.println("=============== Sentence: " + sentence.id);
             while(wordsIterator.hasNext()) {
                 Map.Entry wordsPair = (Map.Entry) wordsIterator.next();
                 WordITA word = (WordITA) wordsPair.getValue();
@@ -110,8 +104,6 @@ public class ParserITA extends Parser {
                 String bigram;
                 if (word.dom == 0) continue;
                 WordITA parent = (WordITA) sentence.wordsMapDouble.get(word.dom);
-                ///System.out.println("Word: " + word.id + " " + word.featValues[1] + " " + word.dom);
-                //System.out.println("Parent: " + parent.id + " " + parent.featValues[1]);
 
                 if(word.id < parent.id) {
                     String delimiter = "<";
@@ -121,13 +113,9 @@ public class ParserITA extends Parser {
                     bigram = parent.featValues[1] + delimiter + word.featValues[1];
                 }
 
-                //System.out.println(bigram);
-
                 if (StatsManagement.stats.containsKey(bigram)) {
-                   // System.out.println("Contains " + bigram + ", curr val " + StatsManagement.stats.get(bigram));
                     StatsManagement.stats.put(bigram, StatsManagement.stats.get(bigram) + 1);
                 } else {
-                   // System.out.println("Adding " + bigram);
                     StatsManagement.stats.put(bigram, 1);
                 }
             }

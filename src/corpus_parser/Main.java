@@ -27,6 +27,7 @@ public class Main {
 
         /////////////////////////////////////////////////////////////
 
+        DatabaseHelper.truncateWords();
         final File folderFI = new File("C:\\corpus\\corpus_ru");
         String resultsPath = "C:\\corpus_stats\\results_rus.csv";
 

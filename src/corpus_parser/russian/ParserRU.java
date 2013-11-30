@@ -23,13 +23,14 @@ import java.util.Map;
  */
 public class ParserRU extends Parser {
 
-    public HashMap<String, String> languageProperties = new HashMap<String, String>();  //все св-ва
+    public  HashMap<String, String> languageProperties = new HashMap<String, String>();  //все св-ва  языка
+
     private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
     private Document doc;
     private DatabaseHelper dbhelper;
 
 
-    private static String META_FILE_NAME="C:\\corpus_meta\\parser_ru_meta.txt.txt";
+    private static String META_FILE_NAME="C:\\corpus_meta\\parser_ru_meta.txt";
 
     private static String XML_NODE_TEXT = "text";
     private static String XML_NODE_WORD = "W";
@@ -97,6 +98,7 @@ public class ParserRU extends Parser {
                     getString(TEXT_NODE_SOURCE, doc),
                     getString(TEXT_NODE_TITLE, doc),
                     getString(fileName, doc));  */
+         //System.out.println(languageProperties.size());
 
             NodeList sentences = doc.getElementsByTagName(XML_NODE_SENTENCE);
 
@@ -118,20 +120,25 @@ public class ParserRU extends Parser {
                             if(!wordElement.getAttribute(WORD_ATTR_DOM).equals(XML_ROOT_NODE))
                                 dom = Integer.valueOf(wordElement.getAttribute(WORD_ATTR_DOM));
 
+                            String LINK = wordElement.getAttribute(WORD_ATTR_LINK);
+                            if(LINK.matches(""))  LINK="NULL";
+
                             WordRU w = new WordRU(dom,
                                     wordElement.getAttribute(WORD_ATTR_FEAT),
                                     Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)),
                                     wordElement.getAttribute(WORD_ATTR_LEMMA),
-                                    wordElement.getAttribute(WORD_ATTR_LINK),
+                                    LINK,
                                     this.languageProperties);
+
                             this.dbhelper.insertWord(w.id,
                                     w.dom,
                                     w.lemma,
                                     w.link,
-                                    wordElement.getNodeValue(),
+                                    wordElement.getTextContent(),
                                     w.featValues[0],
                                     w.properties,
-                                    i);
+                                    w.propertiesValues,
+                                    i+1);
 
                             wordsMap.put(Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)), w);
                         }
@@ -180,11 +187,14 @@ public class ParserRU extends Parser {
 
     public void getMeta(String metaFileName){
         File text = new File(metaFileName);
-        try{ BufferedReader br = new BufferedReader(new FileReader(text));
+        try{
+            BufferedReader br = new BufferedReader(new FileReader(text));
             String metaString;
             while ((metaString = br.readLine()) != null) {
                 String[] metaStringSplitted = metaString.split(";");
-                this.languageProperties.put(metaStringSplitted[0],metaStringSplitted[1]);
+                if(metaStringSplitted[0].startsWith("﻿")) metaStringSplitted[0]=metaStringSplitted[0].substring(1,metaStringSplitted[0].length());
+                if(metaStringSplitted[1].matches("case")) metaStringSplitted[1]="`case`";
+                languageProperties.put(metaStringSplitted[0],metaStringSplitted[1]);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

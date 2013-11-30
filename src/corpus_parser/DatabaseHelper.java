@@ -6,6 +6,7 @@ import com.mysql.jdbc.Statement;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,8 +26,8 @@ public class DatabaseHelper {
         try {
             c = (Connection) DriverManager.getConnection(url, login, password);
             Statement trunkate = (Statement) c.createStatement();
-            PreparedStatement ptruncate = (PreparedStatement) c.prepareStatement("TRUNCATE TABLE texts");
-            ptruncate.executeUpdate();
+            PreparedStatement ptruncateTexts = (PreparedStatement) c.prepareStatement("TRUNCATE TABLE texts");
+            ptruncateTexts.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -38,7 +39,7 @@ public class DatabaseHelper {
         try {
             Statement st = (Statement) c.createStatement();
             PreparedStatement pst = (PreparedStatement) c.prepareStatement(
-                    "INSERT INTO texts(annot, author, editor, source, title, relativepath) VALUES(?, ?, ?, ?, ?, ?)");
+                    "INSERT INTO texts (annot, author, editor, source, title, relativepath) VALUES(?, ?, ?, ?, ?, ?)");
             pst.setString(1, _annot);
             pst.setString(2, _author);
             pst.setString(3, _editor);
@@ -52,25 +53,25 @@ public class DatabaseHelper {
 
     }
 
-    public void insertWord(int _id, int _dom, String _lemma, String _link, String _word, String _partOfSpeech, String[] _properties, int _sentenceId){
+    public void insertWord(int _id, int _dom, String _lemma, String _link, String _word, String _partOfSpeech, List<String> _properties,List<String> _propertiesValues, int _sentenceId){
         try{
-            String generatedStatement = "INSERT INTO words(inernalId, domid, lemma, link, word, partOfSpeech, ";
+            String generatedStatement = "INSERT INTO words (internalId, domid, lemma, link, word, partOfSpeech";
 
             int addedValues=0;
 
-            for(int i=0; i< _properties.length; i++){
-                generatedStatement+=_properties[i];
+            for(int i=0; i< _properties.size(); i++){
+                generatedStatement+=", "+_properties.get(i);
                 addedValues++;
             }
-            generatedStatement+=") VALUES(?,?,?,?,?,?";
+            generatedStatement+=", sentenceId) VALUES(?,?,?,?,?,?";
             for(int i=0;i<addedValues;i++){
                 generatedStatement+=",?";
             }
-            generatedStatement+=")";
-
+            generatedStatement+=",?)";
+            System.out.println("Statement:" +generatedStatement);
             Statement st = (Statement) c.createStatement();
             PreparedStatement pst = (PreparedStatement) c.prepareStatement(generatedStatement);
-            pst.setInt(1,_id);
+            pst.setInt(1, _id);
             pst.setInt(2,_dom);
             pst.setString(3,_lemma);
             pst.setString(4,_link);
@@ -78,9 +79,24 @@ public class DatabaseHelper {
             pst.setString(6,_partOfSpeech);
             if(addedValues!=0)
             for(int i=1;i<=addedValues;i++){
-                pst.setString(i+6,_properties[i-1]);
+                pst.setString(i+6,_propertiesValues.get(i-1));
             }
+            pst.setInt(7 + addedValues, _sentenceId);
+            System.out.println("SQL Statement: " + pst.asSql());
             pst.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void getSentence(){}
+
+    public static void truncateWords(){
+        try {
+            Statement trunkate = (Statement) c.createStatement();
+
+            PreparedStatement ptruncateWords = (PreparedStatement) c.prepareStatement("TRUNCATE TABLE words");
+            ptruncateWords.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
