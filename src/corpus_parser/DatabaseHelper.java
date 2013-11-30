@@ -18,16 +18,22 @@ import java.util.List;
 public class DatabaseHelper {
 
     public static Connection c;
-    public static final String url = "jdbc:mysql://162.243.76.161:3306/cparser?characterEncoding=UTF-8";
-    public static final String login = "cparser";
-    public static final String password = "8HB7F5STY3Vejzc8";
+
+    public static final String urlImilka = "jdbc:mysql://162.243.76.161:3306/cparser?characterEncoding=UTF-8";
+    public static final String loginImilka = "cparser";
+    public static final String passwordImilka = "8HB7F5STY3Vejzc8";
+
+    public static final String urlLevelab = "jdbc:mysql://levelab.ru:3306/cparser?characterEncoding=UTF-8";
+    public static final String loginLevelab = "cparser";
+    public static final String passwordLevelab = "y3x9jEQ2AbWyRrRy";
+
+    public static final String urlLocal = "jdbc:mysql://localhost:3306/cparser?characterEncoding=UTF-8";
+    public static final String loginLocal = "cparser";
+    public static final String passwordLocal = "5782";
 
     public DatabaseHelper(){
         try {
-            c = (Connection) DriverManager.getConnection(url, login, password);
-            Statement trunkate = (Statement) c.createStatement();
-            PreparedStatement ptruncateTexts = (PreparedStatement) c.prepareStatement("TRUNCATE TABLE texts");
-            ptruncateTexts.executeUpdate();
+            c = (Connection) DriverManager.getConnection(urlLocal, loginLocal, passwordLocal);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,11 +97,10 @@ public class DatabaseHelper {
 
     public void getSentence(){}
 
-    public static void truncateWords(){
+    public static void truncateTable(String tableName){
         try {
             Statement trunkate = (Statement) c.createStatement();
-
-            PreparedStatement ptruncateWords = (PreparedStatement) c.prepareStatement("TRUNCATE TABLE words");
+            PreparedStatement ptruncateWords = (PreparedStatement) c.prepareStatement("TRUNCATE TABLE "+tableName);
             ptruncateWords.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
