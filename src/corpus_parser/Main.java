@@ -27,7 +27,7 @@ public class Main {
 
         /////////////////////////////////////////////////////////////
 
-        //DatabaseHelper.truncateTable("words"); //очищаем таблицу words
+        DatabaseHelper.truncateTable("words"); //очищаем таблицу words
 
         final File folderFI = new File("C:\\corpus\\corpus_ru");
         String resultsPath = "C:\\corpus_stats\\results_rus.csv";

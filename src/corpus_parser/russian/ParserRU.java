@@ -98,40 +98,57 @@ public class ParserRU extends Parser {
                     getString(TEXT_NODE_SOURCE, doc),
                     getString(TEXT_NODE_TITLE, doc),
                     getString(fileName, doc)); */
+            int i,j;
+
+            Sentence s;
 
             NodeList sentences = doc.getElementsByTagName(XML_NODE_SENTENCE);
+            Node sentenceNode;
+            Element sentenceElement;
 
-            for (int i = 0; i < sentences.getLength(); i++) {
-                Node sentenceNode = sentences.item(i);
+            WordRU w;
+
+            NodeList words;
+            Node wordNode;
+            Element wordElement;
+            String link;
+            int dom;
+
+
+            HashMap<Integer, Word> wordsMap = new HashMap<Integer, Word>();
+
+        for (i=0; i < sentences.getLength(); i++) {
+                sentenceNode = sentences.item(i);
 
                 if (sentenceNode.getNodeType() == Node.ELEMENT_NODE) {
-                    Element sentenceElement = (Element) sentenceNode;
-                    NodeList words = sentenceElement.getElementsByTagName(XML_NODE_WORD);
+                    sentenceElement = (Element) sentenceNode;
+                    words = sentenceElement.getElementsByTagName(XML_NODE_WORD);
 
-                    HashMap<Integer, Word> wordsMap = new HashMap<Integer, Word>();
+                    wordsMap.clear();
 
-                    for ( int j = 0; j < words.getLength(); j++) {
-                        Node wordNode = words.item(j);
+                    for (j=0; j < words.getLength(); j++) {
+                        wordNode = words.item(j);
                         if(wordNode.getNodeType() == Node.ELEMENT_NODE) {
-                            Element wordElement = (Element) wordNode;
-                            int dom = 0;
+                            wordElement = (Element) wordNode;
+                            dom = 0;
 
                             if(!wordElement.getAttribute(WORD_ATTR_DOM).equals(XML_ROOT_NODE))
                                 dom = Integer.valueOf(wordElement.getAttribute(WORD_ATTR_DOM));
 
-                            String LINK = wordElement.getAttribute(WORD_ATTR_LINK);
-                            if(LINK.matches(""))  LINK="NULL";
+
+                            link = wordElement.getAttribute(WORD_ATTR_LINK);
+                            if(link.matches(""))  link="NULL";
 
                             //создаем слово
-                            WordRU w = new WordRU(dom,
+                             w = new WordRU(dom,
                                     wordElement.getAttribute(WORD_ATTR_FEAT),
                                     Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)),
                                     wordElement.getAttribute(WORD_ATTR_LEMMA),
-                                    LINK,
+                                    link,
                                     this.languageProperties);
                             //передаем слово и его хар-ки в db
 
-                            /*this.dbhelper.insertWord(w.id,
+                            this.dbhelper.insertWord(w.id,
                                     w.dom,
                                     w.lemma,
                                     w.link,
@@ -139,13 +156,13 @@ public class ParserRU extends Parser {
                                     w.featValues[0],
                                     w.properties,
                                     w.propertiesValues,
-                                    i+1); */
+                                    i+1);
 
                             wordsMap.put(Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)), w);
                         }
                     }
 
-                    Sentence s = new Sentence(Integer.valueOf(sentenceElement.getAttribute(SENTENCE_ATTR_ID)),
+                    s = new Sentence(Integer.valueOf(sentenceElement.getAttribute(SENTENCE_ATTR_ID)),
                             wordsMap,null);
 
                     sentenceMap.put(s.id, s);
