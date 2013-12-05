@@ -42,22 +42,23 @@ public class DatabaseHelper {
         }
     }
 
-    public int insertText(String _annot, String _author,
+    public int insertText(String _annot, String _author, String _textdate,
                            String _editor, String _source, String _title,
                            String _relativePath){
         ResultSet generatedKeys;
         int textLastGeneratedKey = 0;
         try {
-            Statement st = (Statement) c.createStatement();
             PreparedStatement textStatement = (PreparedStatement) c.prepareStatement(
-                    "INSERT INTO texts (annot, author, editor, source, title, relativepath) VALUES(?, ?, ?, ?, ?, ?)", java.sql.Statement.RETURN_GENERATED_KEYS);
+                    "INSERT INTO texts (annot, author, textdate, editor, source, title, relativepath) VALUES(?, ?, ?, ?, ?, ?, ?)",
+                    java.sql.Statement.RETURN_GENERATED_KEYS);
             try{
             textStatement.setString(1, _annot);
             textStatement.setString(2, _author);
-            textStatement.setString(3, _editor);
-            textStatement.setString(4, _source);
-            textStatement.setString(5, _title);
-            textStatement.setString(6, _relativePath);
+            textStatement.setString(3, _textdate);
+            textStatement.setString(4, _editor);
+            textStatement.setString(5, _source);
+            textStatement.setString(6, _title);
+            textStatement.setString(7, _relativePath);
             textStatement.executeUpdate();
 
             generatedKeys = textStatement.getGeneratedKeys();
@@ -90,7 +91,6 @@ public class DatabaseHelper {
             }
             generatedStatement+=",?)";
             System.out.println("Statement:" +generatedStatement);
-            Statement st = (Statement) c.createStatement();
             PreparedStatement wordStatement = (PreparedStatement) c.prepareStatement(generatedStatement);
             try{
             wordStatement.setInt(1, _internalId);
@@ -121,7 +121,6 @@ public class DatabaseHelper {
             PreparedStatement sentenceStatement = (PreparedStatement) c.prepareStatement(
                     "INSERT INTO sentences (internalId, sentence, text_id) VALUES(?, ?, ?)", java.sql.Statement.RETURN_GENERATED_KEYS
             );
-            //ResultSet rs = sentenceStatement.executeQuery("SELECT last_insert_id(id) FROM texts");
             try{
             sentenceStatement.setInt(1, _internalId);
             sentenceStatement.setString(2, _sentence);

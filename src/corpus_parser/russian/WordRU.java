@@ -37,7 +37,7 @@ public class WordRU implements Word {
         this.id = _id;
         this.lemma = _lemma;
         this.link = _link;
-        this.featValues = StringHelper.splitString(_feat," ");
+        this.featValues = StringHelper.splitString(_feat, " ");
         this.languageProperties = _languageProperties;
         this.properties = getProperties(_feat);
     }
