@@ -91,37 +91,43 @@ public class ParserRU extends Parser {
     }
 
     public void parse(String fileName) {
-
-            /*this.dbhelper.insertText(getString(TEXT_NODE_ANNOT, doc),
+            //insert text data into db
+            int text_id = this.dbhelper.insertText(
+                    getString(TEXT_NODE_ANNOT, doc),
                     getString(TEXT_NODE_AUTHOR, doc),
                     getString(TEXT_NODE_EDITOR, doc),
                     getString(TEXT_NODE_SOURCE, doc),
                     getString(TEXT_NODE_TITLE, doc),
-                    getString(fileName, doc)); */
+                    fileName);
+            //
+            //Паскаль begin
             int i,j;
-
             Sentence s;
-
             NodeList sentences = doc.getElementsByTagName(XML_NODE_SENTENCE);
             Node sentenceNode;
             Element sentenceElement;
-
             WordRU w;
-
             NodeList words;
             Node wordNode;
             Element wordElement;
             String link;
             int dom;
-
-
             HashMap<Integer, Word> wordsMap = new HashMap<Integer, Word>();
+            //end
 
         for (i=0; i < sentences.getLength(); i++) {
                 sentenceNode = sentences.item(i);
 
                 if (sentenceNode.getNodeType() == Node.ELEMENT_NODE) {
                     sentenceElement = (Element) sentenceNode;
+
+                    //insert sentence data into DB
+                    int sentence_id = this.dbhelper.insertSentence(
+                            Integer.valueOf(sentenceElement.getAttribute(SENTENCE_ATTR_ID)),
+                            sentenceElement.getTextContent(),
+                            text_id);
+                    //
+
                     words = sentenceElement.getElementsByTagName(XML_NODE_WORD);
 
                     wordsMap.clear();
@@ -135,9 +141,10 @@ public class ParserRU extends Parser {
                             if(!wordElement.getAttribute(WORD_ATTR_DOM).equals(XML_ROOT_NODE))
                                 dom = Integer.valueOf(wordElement.getAttribute(WORD_ATTR_DOM));
 
-
+                            //обработка токенов не имеющих связей
                             link = wordElement.getAttribute(WORD_ATTR_LINK);
-                            if(link.matches(""))  link="NULL";
+                            if(link.length()==0)  link="NULL";
+                            //
 
                             //создаем слово
                              w = new WordRU(dom,
@@ -147,8 +154,9 @@ public class ParserRU extends Parser {
                                     link,
                                     this.languageProperties);
                             //передаем слово и его хар-ки в db
-
-                            this.dbhelper.insertWord(w.id,
+                            //insert word data into db
+                            this.dbhelper.insertWord(
+                                    w.id,
                                     w.dom,
                                     w.lemma,
                                     w.link,
@@ -156,7 +164,8 @@ public class ParserRU extends Parser {
                                     w.featValues[0],
                                     w.properties,
                                     w.propertiesValues,
-                                    i+1);
+                                    sentence_id);
+                            //
 
                             wordsMap.put(Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)), w);
                         }
@@ -164,6 +173,7 @@ public class ParserRU extends Parser {
 
                     s = new Sentence(Integer.valueOf(sentenceElement.getAttribute(SENTENCE_ATTR_ID)),
                             wordsMap,null);
+
 
                     sentenceMap.put(s.id, s);
                 }

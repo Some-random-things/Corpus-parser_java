@@ -1,5 +1,6 @@
 package corpus_parser.russian;
 
+import corpus_parser.StringHelper;
 import corpus_parser.Word;
 
 import java.io.*;
@@ -36,13 +37,13 @@ public class WordRU implements Word {
         this.id = _id;
         this.lemma = _lemma;
         this.link = _link;
-        this.featValues = this.feat.split(" ");
+        this.featValues = StringHelper.splitString(_feat," ");
         this.languageProperties = _languageProperties;
         this.properties = getProperties(_feat);
     }
 
     public List<String> getProperties(String _feat){
-           String[] featValues =  _feat.split(" ");
+           String[] featValues =  StringHelper.splitString(_feat, " ");
            List<String> existingProperties = new ArrayList<String>();
            int currentListSize = 0;
            for(int i = 1; i < featValues.length; i++){
