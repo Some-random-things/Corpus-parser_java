@@ -16,9 +16,6 @@ import java.util.List;
  */
 public class WordRU implements Word {
 
-
-
-
     public int dom;
     public String feat;
     public int id;

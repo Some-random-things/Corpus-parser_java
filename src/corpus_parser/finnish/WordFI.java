@@ -10,6 +10,7 @@ import corpus_parser.Word;
  * To change this template use File | Settings | File Templates.
  */
 public class WordFI implements Word {
+
     public int id;
     public int dom; //dom means value of <dep gov= ...> attribute
     public String feat; //feat means <token>   <posreading rawtags= ...> attribute

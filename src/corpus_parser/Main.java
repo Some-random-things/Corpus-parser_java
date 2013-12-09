@@ -31,11 +31,11 @@ public class Main {
         DatabaseHelper.truncateTable("texts");
         DatabaseHelper.truncateTable("sentences");*/
 
-        final File folderFI = new File("C:\\corpus\\corpus_ru");
+        /*final File folderRU = new File("C:\\corpus\\corpus_ru");
         String resultsPath = "C:\\corpus_stats\\results_rus.csv";
 
-        StatsManagement.getStats(folderFI, StatsManagement.CorpusLanguage.RUSSIAN, dbhelper);
-        StatsManagement.writeStats(resultsPath, true);
+        StatsManagement.getStats(folderRU, StatsManagement.CorpusLanguage.RUSSIAN, dbhelper);
+        StatsManagement.writeStats(resultsPath, true); */
 
         ////////////////////////////////////////////////////////////
 
@@ -45,5 +45,10 @@ public class Main {
         StatsManagement.getStats(folderITA, StatsManagement.CorpusLanguage.ITALIAN, dbhelper);
         StatsManagement.writeStats(resultsPath, true); */
 
+        final File folderSW = new File("C:\\corpus\\corpus_swe");
+        String resultsPath = "C:\\corpus_stats\\results_swe.csv";
+
+        StatsManagement.getStats(folderSW, StatsManagement.CorpusLanguage.SWEDISH, dbhelper);
+        StatsManagement.writeStats(resultsPath, true);
     }
 }

@@ -1,9 +1,6 @@
 package corpus_parser.italian;
 
-import corpus_parser.Parser;
-import corpus_parser.Sentence;
-import corpus_parser.StatsManagement;
-import corpus_parser.Word;
+import corpus_parser.*;
 
 import java.io.*;
 import java.util.*;
@@ -36,11 +33,11 @@ public class ParserITA extends Parser {
             HashMap<Double, Word> wordsMapDouble = new HashMap<Double,Word>();
             for (String word: listOfWords) {
 
-                if(word!=null && word.length()!=0 && word.substring(0,1).matches("[0-9]")) {  //если строка не пустая и не звездочки
+                if(word!=null && word.length()!=0 && word.substring(0,1).equals("[0-9]")) {  //если строка не пустая и не звездочки
                     double WordID;
                     String WordFeatures=null;
                     String WordDependency;
-                    String[] splittedWord = word.split(" ");
+                    String[] splittedWord = StringHelper.splitString(word, " ");
                     WordID = Double.valueOf(splittedWord[0]);
                     WordDependency = splittedWord[splittedWord.length-1];
                         for(int i=0; i<splittedWord.length;i++){
