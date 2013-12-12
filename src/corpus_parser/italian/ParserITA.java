@@ -15,13 +15,20 @@ import java.util.*;
 public class ParserITA extends Parser {
 
     private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
-    public ParserITA(String fileName){
+    private DatabaseHelper dbhelper;
+
+    public ParserITA(String fileName, DatabaseHelper _dbhelper){
+        this.dbhelper =_dbhelper;
         parse(fileName);
     }
 
     public void parse(String fileName){
         File text = new File(fileName);
         List<String> listOfWords = new ArrayList<String>();
+        double WordID;
+        String WordFeatures=null;
+        String WordDependency;
+        String[] splittedWord;
         try {
             BufferedReader br = new BufferedReader(new FileReader(text));
             String tmp;
@@ -32,12 +39,8 @@ public class ParserITA extends Parser {
 
             HashMap<Double, Word> wordsMapDouble = new HashMap<Double,Word>();
             for (String word: listOfWords) {
-
-                if(word!=null && word.length()!=0 && word.substring(0,1).equals("[0-9]")) {  //если строка не пустая и не звездочки
-                    double WordID;
-                    String WordFeatures=null;
-                    String WordDependency;
-                    String[] splittedWord = StringHelper.splitString(word, " ");
+                if(word!=null && word.length()!=0 && word.substring(0,1).matches("[0-9]")) {  //если строка не пустая и не звездочки
+                    splittedWord = word.split(" ");
                     WordID = Double.valueOf(splittedWord[0]);
                     WordDependency = splittedWord[splittedWord.length-1];
                         for(int i=0; i<splittedWord.length;i++){

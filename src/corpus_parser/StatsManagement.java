@@ -1,5 +1,6 @@
 package corpus_parser;
 
+import corpus_parser.deutsch.ParserGER;
 import corpus_parser.finnish.ParserFI;
 import corpus_parser.italian.ParserITA;
 import corpus_parser.russian.ParserRU;
@@ -26,7 +27,8 @@ public abstract class StatsManagement {
         RUSSIAN,
         FINNISH,
         ITALIAN,
-        SWEDISH
+        SWEDISH,
+        DEUTSCH
     }
 
     public static void getStats(final File folder, CorpusLanguage language, DatabaseHelper _dbhelper) {
@@ -44,10 +46,13 @@ public abstract class StatsManagement {
                         p = new ParserFI(fileEntry.getAbsolutePath(), _dbhelper);
                         break;
                     case ITALIAN:
-                        p = new ParserITA(fileEntry.getAbsolutePath());
+                        p = new ParserITA(fileEntry.getAbsolutePath(), _dbhelper);
                         break;
                     case SWEDISH:
                         p = new ParserSW(fileEntry.getAbsolutePath(), _dbhelper);
+                        break;
+                    case DEUTSCH:
+                        p = new ParserGER(fileEntry.getAbsolutePath(), _dbhelper);
                         break;
                 }
                 p.getStats();

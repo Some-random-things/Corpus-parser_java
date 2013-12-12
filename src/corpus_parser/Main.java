@@ -11,13 +11,13 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args) {
-        DatabaseHelper dbhelper = new DatabaseHelper();
+        //DatabaseHelper dbhelper = new DatabaseHelper();
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        //DatabaseHelper dbhelper = null;
+        DatabaseHelper dbhelper = null;
 
         /*final File folderFI = new File("C:\\corpus\\corpus_fin");
         String resultsPath = "C:\\corpus_stats\\results_fin.csv";
@@ -43,12 +43,17 @@ public class Main {
         String resultsPath = "C:\\corpus_stats\\results_ita.csv";
 
         StatsManagement.getStats(folderITA, StatsManagement.CorpusLanguage.ITALIAN, dbhelper);
-        StatsManagement.writeStats(resultsPath, true); */
+        StatsManagement.writeStats(resultsPath, true);*/
 
-        final File folderSW = new File("C:\\corpus\\corpus_swe");
+        /*final File folderSW = new File("C:\\corpus\\corpus_swe");
         String resultsPath = "C:\\corpus_stats\\results_swe.csv";
 
         StatsManagement.getStats(folderSW, StatsManagement.CorpusLanguage.SWEDISH, dbhelper);
+        StatsManagement.writeStats(resultsPath, true);*/
+        final File folderITA = new File("C:\\corpus\\corpus_deu");
+        String resultsPath = "C:\\corpus_stats\\results_deu.csv";
+
+        StatsManagement.getStats(folderITA, StatsManagement.CorpusLanguage.DEUTSCH, dbhelper);
         StatsManagement.writeStats(resultsPath, true);
     }
 }
