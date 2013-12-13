@@ -8,6 +8,7 @@ import com.mysql.jdbc.Statement;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -19,20 +20,19 @@ import java.util.List;
  */
 public class DatabaseHelper {
 
-    public static Connection c;
-    public static int lastGeneratedKey;
+    private static Connection c;
 
-    public static final String urlImilka = "jdbc:mysql://162.243.76.161:3306/cparser?characterEncoding=UTF-8";
-    public static final String loginImilka = "cparser";
-    public static final String passwordImilka = "8HB7F5STY3Vejzc8";
+    private static final String urlImilka = "jdbc:mysql://162.243.76.161:3306/cparser?characterEncoding=UTF-8";
+    private static final String loginImilka = "cparser";
+    private static final String passwordImilka = "8HB7F5STY3Vejzc8";
 
-    public static final String urlLevelab = "jdbc:mysql://levelab.ru:3306/cparser?characterEncoding=UTF-8";
-    public static final String loginLevelab = "cparser";
-    public static final String passwordLevelab = "y3x9jEQ2AbWyRrRy";
+    private static final String urlLevelab = "jdbc:mysql://levelab.ru:3306/cparser?characterEncoding=UTF-8";
+    private static final String loginLevelab = "cparser";
+    private static final String passwordLevelab = "y3x9jEQ2AbWyRrRy";
 
-    public static final String urlLocal = "jdbc:mysql://localhost:3306/cparser?characterEncoding=UTF-8";
-    public static final String loginLocal = "cparser";
-    public static final String passwordLocal = "5782";
+    private static final String urlLocal = "jdbc:mysql://localhost:3306/cparser?characterEncoding=UTF-8";
+    private static final String loginLocal = "cparser";
+    private static final String passwordLocal = "5782";
 
     public DatabaseHelper(){
         try {
@@ -111,6 +111,17 @@ public class DatabaseHelper {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+    public void insertWord2(HashMap<String, Object> words, List<String> _properties, List<String> _propertiesValues){
+        String generatedStatement = "INSERT INTO words (";
+
+        int addedValues=0;
+
+        for(int i=0; i< _properties.size(); i++){
+            if(i==0) generatedStatement+=_properties.get(i);
+            else generatedStatement+=", "+_properties.get(i);
+            addedValues++;
         }
     }
 

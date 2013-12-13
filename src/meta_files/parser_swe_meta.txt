@@ -1,0 +1,311 @@
+++;Conjunction
+++EL;Conjunction
+++ELKR;Conjunction
+++KS;Conjunction
+++KU;Conjunction
+++MN;Conjunction
+++OC;Conjunction
+++OCKR;Conjunction
+++OCPG;Conjunction
+++OCTR;Conjunction
+AB;Adverb
+ABDA;Adverb
+ABFA;Adverb
+ABJA;Adverb
+ABJU;Adverb
+ABKP;Adverb
+ABKS;Adverb
+ABKU;Adverb
+ABMN;Adverb
+ABNA;Adverb
+ABOC;Adverb
+ABRA;Adverb
+ABSA;Adverb
+ABSU;Adverb
+ABTA;Adverb
+ABZA;Adverb
+ABZK;Adverb
+AJ    GG;Adjective
+AJ  HH;Adjective
+AJ  HHGG;Adjective
+AJ  HS;Adjective
+AJ  SS;Adjective
+AJ;Adjective
+AJKP;Adjective
+AJKPHH;Adjective
+AJKPHHGG;Adjective
+AJSU;Adjective
+AJSUHH;Adjective
+AJSUSS;Adjective
+AN    GG;Noun
+AN  HH;Noun
+AN  SS;Noun
+AN;Noun
+ANDD  GG;Noun
+ANDD;Noun
+ANDDSS;Noun
+ANDDSSGG;Noun
+AV;Verb
+AVIP;Verb
+AVIV;Verb
+AVPK;Verb
+AVPS;Verb
+AVPT;Verb
+AVSN;Verb
+BVIV;Verb
+BVPK;Verb
+BVPS;Verb
+BVPT;Verb
+BVSN;Verb
+EH  PU;Hesitation
+EH;Hesitation
+EHNJPU;Hesitation
+EHRJ;Hesitation
+EHRJPU;Hesitation
+EHUJ;Hesitation
+EHUJPU;Hesitation
+EN  HH;Indefinite article/Numeral ("en/ett")
+EN  HHGG;Indefinite article/Numeral ("en/ett")
+EN;Indefinite article/Numeral ("en/ett")
+FV;Verb
+FVIV;Verb
+FVPK;Verb
+FVPS  PA;Verb
+FVPS;Verb
+FVPT;Verb
+FVSN;Verb
+GVIP;Verb
+GVIV  PA;Verb
+GVIV;Verb
+GVPS  PA;Verb
+GVPS;Verb
+GVPT  PA;Verb
+GVPT;Verb
+GVSN  PA;Verb
+GVSN;Verb
+HV;Verb
+HVIP;Verb
+HVIV;Verb
+HVPS;Verb
+HVPT;Verb
+HVSN;Verb
+I?;Punct
+IC;Punct
+ID    AA;Part of idiom (multi-word unit)
+ID;Part of idiom (multi-word unit)
+IG;Punct
+IG++  KR;Punct
+IG++EL;Punct
+IG++ELKR;Punct
+IGPR;Punct
+IK    KR;Punct
+IK;Punct
+IK++  KR;Punct
+IK++;Punct
+IK++EL;Punct
+IK++ELKR;Punct
+IK++OC;Punct
+IM;Punct
+IP;Punct
+IPPR;Punct
+IPXX;Punct
+IQ;Punct
+IR;Punct
+IS;Punct
+IS++;Punct
+IS++ELKR;Punct
+IT;Punct
+IT++  KR;Punct
+IT++;Punct
+IT++EL;Punct
+IT++ELKR;Punct
+IT++OC;Punct
+ITPR;Punct
+IU;Punct
+KV;Verb
+KVIV;Verb
+KVPS;Verb
+KVPT;Verb
+KVSN;Verb
+MN    GG;Noun
+MN  HH;Noun
+MN  SS;Noun
+MN;Noun
+MNDD;Noun
+MNDDSS;Noun
+MVPS;Verb
+MVPT;Verb
+NJ;Falling juncture
+NJPU;Falling juncture
+NN    GG;Noun
+NN  HH;Noun
+NN  HHGG;Noun
+NN  HS;Noun
+NN  HSGG;Noun
+NN  SS;Noun
+NN  SSGG;Noun
+NN;Noun
+NNDD  GG;Noun
+NNDD;Noun
+NNDDHH;Noun
+NNDDHHGG;Noun
+NNDDHS;Noun
+NNDDHSGG;Noun
+NNDDSS;Noun
+NNDDSSGG;Noun
+NNDDTR;Noun
+PN    GG;Proper name
+PN  HH;Proper name
+PN  HHGG;Proper name
+PN  SS;Proper name
+PN  SSGG;Proper name
+PN;Proper name
+PNDD  GG;Proper name
+PNDD;Proper name
+PNDDHH;Proper name
+PNDDSS;Proper name
+PNDDSSGG;Proper name
+PO;Pronoun
+POCP;Pronoun
+POCPHH;Pronoun
+POCPHHAA;Pronoun
+POCPHHGG;Pronoun
+PODP  AA;Pronoun
+PODP  GG;Pronoun
+PODP;Pronoun
+PODPHH;Pronoun
+PODPHHAA;Pronoun
+PODPHHGG;Pronoun
+POFP;Pronoun
+POFPHH;Pronoun
+POFPHHAA;Pronoun
+POFPHHGG;Pronoun
+POKP  GG;Pronoun
+POKP;Pronoun
+POKPHH;Pronoun
+POKPHHGG;Pronoun
+PONP;Pronoun
+PONPHH;Pronoun
+POOP;Pronoun
+POOPHH;Pronoun
+POPP  AA;Pronoun
+POPP;Pronoun
+POPPHH;Pronoun
+POPPHHAA;Pronoun
+POPPHHGG;Pronoun
+PORP  GG;Pronoun
+PORP;Pronoun
+PORPHH;Pronoun
+PORPHHAA;Pronoun
+PORPHHGG;Pronoun
+POSU  GG;Pronoun
+POSU;Pronoun
+POSUHH;Pronoun
+POSUHHGG;Pronoun
+POTP  GG;Pronoun
+POTP;Pronoun
+POTPHH;Pronoun
+POTPHHAA;Pronoun
+POTPHHGG;Pronoun
+POXP  AA;Pronoun
+POXP  GG;Pronoun
+POXP;Pronoun
+POXPHH;Pronoun
+POXPHHAA;Pronoun
+POXPHHGG;Pronoun
+POXX;Pronoun
+POZP;Pronoun
+POZPHH;Pronoun
+POZPHHAA;Pronoun
+POZPHHGG;Pronoun
+PR;Preposition
+PRKP;Preposition
+PRSU;Preposition
+PU;List item
+QQ;?
+QV;Verb
+QVIV;Verb
+QVPS;Verb
+QVPT;Verb
+QVSN;Verb
+RJ;Level juncture
+RJPU;Level juncture
+RO  HH;Numeral other than "en", "ett" (one)
+RO;Numeral other than "en", "ett" (one)
+ROOT;Numeral other than "en", "ett" (one)
+ROOTHH;Numeral other than "en", "ett" (one)
+SP  HH;Participle
+SP  HHGG;Participle
+SP  HM;Participle
+SP  HMGG;Participle
+SP  SM;Participle
+SP;Participle
+SV;Verb
+SVIV;Verb
+SVPS;Verb
+SVPT;Verb
+TP    PA;Participle
+TP  HH;Participle
+TP  HHGG;Participle
+TP  HHPA;Participle
+TP  HM;Participle
+TP  HMGG;Participle
+TP  HMPA;Participle
+TP  SM;Participle
+TP  SMPA;Participle
+TP;Participle
+UJ;Rising juncture
+UJPU;Rising juncture
+UK;Conjunction
+UKAT;Conjunction
+UKFI;Conjunction
+UKKC;Conjunction
+UKKD;Conjunction
+UKKM;Conjunction
+UKKS;Conjunction
+UKKU;Conjunction
+UKOM;Conjunction
+UKTE;Conjunction
+UU;Exclamation
+VN    GG;Noun
+VN  HH;Noun
+VN  HS;Noun
+VN  SS;Noun
+VN;Noun
+VNDD  GG;Noun
+VNDD;Noun
+VNDDHH;Noun
+VNDDHS;Noun
+VNDDSS;Noun
+VNDDSSGG;Noun
+VV    PA;Verb
+VV  SM;Verb
+VV  SMPA;Verb
+VV;Verb
+VVIP;Verb
+VVIPSM;Verb
+VVIV  PA;Verb
+VVIV;Verb
+VVIVSM;Verb
+VVIVSMPA;Verb
+VVOP;Verb
+VVPK;Verb
+VVPS  PA;Verb
+VVPS;Verb
+VVPSSM;Verb
+VVPSSMPA;Verb
+VVPT  PA;Verb
+VVPT;Verb
+VVPTSM;Verb
+VVPTSMPA;Verb
+VVSN  PA;Verb
+VVSN;Verb
+VVSNSM;Verb
+VVSNSMPA;Verb
+WVIV;Verb
+WVPK;Verb
+WVPS;Verb
+WVPT;Verb
+WVSN;Verb
+XX;Unclassifiable part-of-speech
+YY;Interjection

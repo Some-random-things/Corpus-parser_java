@@ -5,6 +5,7 @@ import corpus_parser.Word;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class WordRU implements Word {
     public List<String> properties;
     public List<String> propertiesValues = new ArrayList<String>();
     public HashMap<String,String> languageProperties;
+    public HashMap<Object, String> databaseFields;
 
 
     public WordRU(int _dom, String _feat, int _id, String _lemma, String _link, HashMap<String, String> _languageProperties)
@@ -41,19 +43,18 @@ public class WordRU implements Word {
 
     public List<String> getProperties(String _feat){
            String[] featValues =  StringHelper.splitString(_feat, " ");
-           List<String> existingProperties = new ArrayList<String>();
-           int currentListSize = 0;
+           List<String> existingProperties = new ArrayList<String>(/*Arrays.asList("internalId","domid","lemma","link","word","partOfSpeech")*/);
            for(int i = 1; i < featValues.length; i++){
                if(languageProperties.containsKey(featValues[i])){
-                   existingProperties.add(currentListSize,languageProperties.get(featValues[i]));
-                   propertiesValues.add(currentListSize, featValues[i]);
-                   currentListSize++;
+                   existingProperties.add(languageProperties.get(featValues[i]));
+                   propertiesValues.add(featValues[i]);
                }
            }
         return existingProperties;
-
     }
 
-
+    private void setDatabaseFields(){
+        databaseFields.put(this.id,"internalId");
+    }
 
 }

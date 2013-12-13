@@ -2,6 +2,8 @@ package corpus_parser.italian;
 
 import corpus_parser.Word;
 
+import java.util.HashMap;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Pavel
@@ -31,4 +33,6 @@ public class WordITA implements Word {
         this.dom = Double.valueOf(dependencyValues[0].substring(1, dependencyValues[0].length()));
         this.link = dependencyValues[1].substring(0, dependencyValues[1].length()-1);
     }
+
+
 }

@@ -1,0 +1,56 @@
+TRUNC;Word remnant
+ADJA;Adjective
+ADJD;Adjective
+ADV;Adverb
+APPR;Preposition/Circumposition
+APPRART;Preposition/Circumposition
+APPO;Postposition
+APZR;Preposition/Circumposition
+ART;Article
+CARD;Cardinal Number
+FM;Foreign language material
+ITJ;Interjection
+KOUI;Conjunction
+KOUS;Conjunction
+KON;Conjunction
+KOKOM;Conjunction
+NN;Noun
+NE;Noun
+PDS;Pronoun
+PDAT;Pronoun
+PIS;Pronoun
+PIAT;Pronoun
+PIDAT;Pronoun
+PPER;Pronoun
+PPOSS;Pronoun
+PPOSAT;Pronoun
+PRELS;Pronoun
+PRELAT;Pronoun
+PRF;Pronoun
+PWS;Pronoun
+PWAT;Pronoun
+PWAV;Pronoun
+PAV;Adverb
+PTKZU;Zu before infinitive
+PTKNEG;Particle
+PTKVZ;Particle
+PTKANT;Particle
+PTKA;Particle
+SGML;SGML markup
+SPELL;LetterSequence
+VVFIN;Verb
+VVIMP;Imperative
+VVINF;Infinitive
+VVIZU;Infinitive
+VVPP;Participle
+VAFIN;Verb
+VAIMP;Imperative
+VAINF;Infinitive
+VAPP;Participle
+VMFIN;Verb
+VMINF;Infinitive
+VMPP;Participle
+XY;non-word containing non-letter
+$,;comma
+$.;sentence-final punctuation mark
+$(;other sentence-internal punctuation mark

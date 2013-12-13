@@ -11,13 +11,13 @@ import java.io.File;
 public class Main {
 
     public static void main(String[] args) {
-        //DatabaseHelper dbhelper = new DatabaseHelper();
+        DatabaseHelper dbhelper = new DatabaseHelper();
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        DatabaseHelper dbhelper = null;
+        //DatabaseHelper dbhelper = null;
 
         /*final File folderFI = new File("C:\\corpus\\corpus_fin");
         String resultsPath = "C:\\corpus_stats\\results_fin.csv";
@@ -27,15 +27,15 @@ public class Main {
 
         /////////////////////////////////////////////////////////////
 
-        /*DatabaseHelper.truncateTable("words"); //очищаем таблицу words
+        DatabaseHelper.truncateTable("words"); //очищаем таблицу words
         DatabaseHelper.truncateTable("texts");
-        DatabaseHelper.truncateTable("sentences");*/
+        DatabaseHelper.truncateTable("sentences");
 
-        /*final File folderRU = new File("C:\\corpus\\corpus_ru");
+        final File folderRU = new File("C:\\corpus\\corpus_ru");
         String resultsPath = "C:\\corpus_stats\\results_rus.csv";
 
         StatsManagement.getStats(folderRU, StatsManagement.CorpusLanguage.RUSSIAN, dbhelper);
-        StatsManagement.writeStats(resultsPath, true); */
+        StatsManagement.writeStats(resultsPath, true);
 
         ////////////////////////////////////////////////////////////
 
@@ -50,10 +50,11 @@ public class Main {
 
         StatsManagement.getStats(folderSW, StatsManagement.CorpusLanguage.SWEDISH, dbhelper);
         StatsManagement.writeStats(resultsPath, true);*/
-        final File folderITA = new File("C:\\corpus\\corpus_deu");
+        /*final File folderITA = new File("C:\\corpus\\corpus_deu");
         String resultsPath = "C:\\corpus_stats\\results_deu.csv";
 
         StatsManagement.getStats(folderITA, StatsManagement.CorpusLanguage.DEUTSCH, dbhelper);
-        StatsManagement.writeStats(resultsPath, true);
+        StatsManagement.writeStats(resultsPath, true);*/
+
     }
 }

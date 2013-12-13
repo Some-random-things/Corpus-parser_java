@@ -90,14 +90,14 @@ public class ParserRU extends Parser {
 
     public void parse(String fileName) {
         //insert text data into db
-        /*int text_id = this.dbhelper.insertText(
+        int text_id = this.dbhelper.insertText(
                 getString(TEXT_NODE_ANNOT, doc),
                 getString(TEXT_NODE_AUTHOR, doc),
                 getString(TEXT_NODE_DATE, doc),
                 getString(TEXT_NODE_EDITOR, doc),
                 getString(TEXT_NODE_SOURCE, doc),
                 getString(TEXT_NODE_TITLE, doc),
-                fileName); */
+                fileName);
         //
         //Паскаль begin
         int i,j;
@@ -120,10 +120,10 @@ public class ParserRU extends Parser {
                     sentenceElement = (Element) sentenceNode;
 
                     //insert sentence data into DB
-                    /*int sentence_id = this.dbhelper.insertSentence(
+                    int sentence_id = this.dbhelper.insertSentence(
                             Integer.valueOf(sentenceElement.getAttribute(SENTENCE_ATTR_ID)),
                             sentenceElement.getTextContent(),
-                            text_id); */
+                            text_id);
 
                     words = sentenceElement.getElementsByTagName(XML_NODE_WORD);
                     HashMap<Integer, Word> wordsMap = new HashMap<Integer, Word>();
@@ -150,7 +150,7 @@ public class ParserRU extends Parser {
                                     this.languageProperties);
                             //передаем слово и его хар-ки в db
                             //insert word data into db
-                            /*this.dbhelper.insertWord(
+                            this.dbhelper.insertWord(
                                     w.id,
                                     w.dom,
                                     w.lemma,
@@ -159,7 +159,7 @@ public class ParserRU extends Parser {
                                     w.featValues[0],
                                     w.properties,
                                     w.propertiesValues,
-                                    sentence_id);*/
+                                    sentence_id);
                             //
 
                             wordsMap.put(Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)), w);
@@ -214,8 +214,7 @@ public class ParserRU extends Parser {
             String metaString;
             while ((metaString = br.readLine()) != null) {
                 String[] metaStringSplitted = metaString.split(";");
-                //обработка зарезервированных слов
-                if(metaStringSplitted[0].startsWith("?")) metaStringSplitted[0]=metaStringSplitted[0].substring(1,metaStringSplitted[0].length());
+                //обработка зарезервированных слов sql
                 if(metaStringSplitted[1].matches("case")) metaStringSplitted[1]="`case`";
                 //
                 languageProperties.put(metaStringSplitted[0],metaStringSplitted[1]);
