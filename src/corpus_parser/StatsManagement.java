@@ -55,7 +55,7 @@ public class StatsManagement {
                         p = new ParserGER(fileEntry.getAbsolutePath(), _dbhelper);
                         break;
                 }
-                p.getStats();
+               p.getStats();
             }
         }
     }

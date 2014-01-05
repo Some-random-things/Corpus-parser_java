@@ -11,9 +11,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,7 +21,8 @@ import java.util.Map;
  */
 public class ParserRU extends Parser {
 
-    public  HashMap<String, String> languageProperties = new HashMap<String, String>();  //все св-ва  языка
+    public  HashMap<String, String> languageCategoriesMeta = new HashMap<String, String>();  //все св-ва  языка
+    public List<String> languagePropertiesValues = new ArrayList<String>();
 
     private HashMap<Integer, Sentence> sentenceMap = new HashMap<Integer, Sentence>();
     private Document doc;
@@ -56,6 +55,8 @@ public class ParserRU extends Parser {
     public ParserRU(String fileName, DatabaseHelper _dbhelper)  {
 
         getMeta(META_FILE_NAME);
+        for(int i=0; i< languagePropertiesValues.size();i++)
+        System.out.println(languagePropertiesValues.get(i));
 
         this.dbhelper = _dbhelper;
 
@@ -147,7 +148,8 @@ public class ParserRU extends Parser {
                                     Integer.valueOf(wordElement.getAttribute(WORD_ATTR_ID)),
                                     wordElement.getAttribute(WORD_ATTR_LEMMA),
                                     link,
-                                    this.languageProperties);
+                                    this.languageCategoriesMeta,
+                                    this.languagePropertiesValues);
                             //передаем слово и его хар-ки в db
                             //insert word data into db
                             this.dbhelper.insertWord(
@@ -193,10 +195,10 @@ public class ParserRU extends Parser {
 
                 if(word.id < parent.id) {
                     String delimiter = "<";
-                    bigram = word.featValues[0] + delimiter + parent.featValues[0];
+                    bigram = word.partOfSpeech + delimiter + parent.partOfSpeech;
                 } else {
                     String delimiter = ">";
-                    bigram = parent.featValues[0] + delimiter + word.featValues[0];
+                    bigram = parent.partOfSpeech + delimiter + word.partOfSpeech;
                 }
 
                 if (StatsManagement.stats.containsKey(bigram)) {
@@ -214,10 +216,9 @@ public class ParserRU extends Parser {
             String metaString;
             while ((metaString = br.readLine()) != null) {
                 String[] metaStringSplitted = metaString.split(";");
-                //обработка зарезервированных слов sql
-                if(metaStringSplitted[1].matches("case")) metaStringSplitted[1]="`case`";
-                //
-                languageProperties.put(metaStringSplitted[0],metaStringSplitted[1]);
+                languageCategoriesMeta.put(metaStringSplitted[0], metaStringSplitted[1]);
+                if(!languagePropertiesValues.contains(metaStringSplitted[1]))
+                    languagePropertiesValues.add(metaStringSplitted[1]);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();

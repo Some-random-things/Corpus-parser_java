@@ -7,4 +7,5 @@ package corpus_parser;
  * Time: 22:47
  */
 public interface Word {
+    //public void getProperties();
 }

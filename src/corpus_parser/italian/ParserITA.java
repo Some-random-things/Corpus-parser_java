@@ -57,11 +57,6 @@ public class ParserITA extends Parser {
                         if(WordDependency==null) WordDependency="ERROR";
                         if(WordDependency.length()<3) WordDependency="[0;0]";
 
-                    /*System.out.println("===========");
-                    System.out.println(WordID);
-                    System.out.println(WordFeatures);
-                    System.out.println(WordDependency); */
-
                     WordITA w = new WordITA(WordFeatures, WordID, WordDependency);
                     wordsMapDouble.put(WordID,w);
                 }

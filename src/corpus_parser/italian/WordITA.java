@@ -1,5 +1,6 @@
 package corpus_parser.italian;
 
+import corpus_parser.StringHelper;
 import corpus_parser.Word;
 
 import java.util.HashMap;
@@ -26,10 +27,10 @@ public class WordITA implements Word {
     {
         this.feat = _feat;
         this.id = _id;
-        this.featValues = this.feat.split(" ");
+        this.featValues = StringHelper.splitString(_feat, " ");
         this.dependency = _dependency;
-        this.lemma = featValues[0].substring(1, featValues[0].length());
-        this.dependencyValues = this.dependency.split(";");
+        this.lemma = featValues[0].substring(1, featValues[0].length());//.intern();
+        this.dependencyValues = StringHelper.splitString(dependency, ";");
         this.dom = Double.valueOf(dependencyValues[0].substring(1, dependencyValues[0].length()));
         this.link = dependencyValues[1].substring(0, dependencyValues[1].length()-1);
     }

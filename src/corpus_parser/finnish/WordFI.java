@@ -1,5 +1,6 @@
 package corpus_parser.finnish;
 
+import corpus_parser.StringHelper;
 import corpus_parser.Word;
 
 /**
@@ -26,6 +27,6 @@ public class WordFI implements Word {
         this.id = _id;
         this.lemma = _lemma;
         this.link = _link;
-        this.featValues = this.feat.split(" ");
+        this.featValues = StringHelper.splitString(_feat, " ");
     }
 }

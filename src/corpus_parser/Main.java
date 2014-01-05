@@ -27,9 +27,9 @@ public class Main {
 
         /////////////////////////////////////////////////////////////
 
-        DatabaseHelper.truncateTable("words"); //очищаем таблицу words
+        /*DatabaseHelper.truncateTable("words"); //очищаем таблицу words
         DatabaseHelper.truncateTable("texts");
-        DatabaseHelper.truncateTable("sentences");
+        DatabaseHelper.truncateTable("sentences");  */
 
         final File folderRU = new File("C:\\corpus\\corpus_ru");
         String resultsPath = "C:\\corpus_stats\\results_rus.csv";
@@ -45,11 +45,16 @@ public class Main {
         StatsManagement.getStats(folderITA, StatsManagement.CorpusLanguage.ITALIAN, dbhelper);
         StatsManagement.writeStats(resultsPath, true);*/
 
+        ////////////////////////////////////////////////////////////
+
         /*final File folderSW = new File("C:\\corpus\\corpus_swe");
         String resultsPath = "C:\\corpus_stats\\results_swe.csv";
 
         StatsManagement.getStats(folderSW, StatsManagement.CorpusLanguage.SWEDISH, dbhelper);
         StatsManagement.writeStats(resultsPath, true);*/
+
+        ///////////////////////////////////////////////////////////
+
         /*final File folderITA = new File("C:\\corpus\\corpus_deu");
         String resultsPath = "C:\\corpus_stats\\results_deu.csv";
 

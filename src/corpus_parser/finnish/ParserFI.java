@@ -71,8 +71,10 @@ public class ParserFI extends Parser {
                 Node sentenceNode = sentences.item(i);
 
                 if (sentenceNode.getNodeType() == Node.ELEMENT_NODE) {
-
                     Element sentenceElement = (Element) sentenceNode;
+                    //insert into db
+
+                    //
                     NodeList words = sentenceElement.getElementsByTagName(XML_NODE_WORD);
                     NodeList dependencies = sentenceElement.getElementsByTagName(WORD_ATTR_DEP_ID);  //пригодится чуть ниже  !!!
                     HashMap<Integer, Word> wordsMap = new HashMap<Integer, Word>();

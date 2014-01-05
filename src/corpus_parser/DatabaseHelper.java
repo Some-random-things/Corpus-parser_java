@@ -107,7 +107,7 @@ public class DatabaseHelper {
             System.out.println("SQL Statement: " + wordStatement.asSql());
             wordStatement.executeUpdate();
             } finally {
-                wordStatement.close(); //without that there should be memory leak (byte[] not GC'd)
+                wordStatement.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -154,12 +154,11 @@ public class DatabaseHelper {
 
     public static void truncateTable(String tableName){
         try {
-            Statement trunkate = (Statement) c.createStatement();
-            PreparedStatement ptruncateWords = (PreparedStatement) c.prepareStatement("TRUNCATE TABLE "+tableName);
+            PreparedStatement truncateStatement = (PreparedStatement) c.prepareStatement("TRUNCATE TABLE "+tableName);
             try{
-            ptruncateWords.executeUpdate();
+            truncateStatement.executeUpdate();
             } finally {
-                ptruncateWords.close();
+                truncateStatement.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
