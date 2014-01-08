@@ -23,6 +23,7 @@ public class WordRU implements Word {
     public String lemma;
     public String link;
     public String[] featValues;
+    public String partOfSpeech;
     public List<String> properties;
     public List<String> propertiesValues = new ArrayList<String>();
     public HashMap<String,String> languageProperties;
@@ -37,13 +38,14 @@ public class WordRU implements Word {
         this.lemma = _lemma;
         this.link = _link;
         this.featValues = StringHelper.splitString(_feat, " ");
+        this.partOfSpeech = featValues[0];
         this.languageProperties = _languageProperties;
         this.properties = getProperties(_feat);
     }
 
     public List<String> getProperties(String _feat){
            String[] featValues =  StringHelper.splitString(_feat, " ");
-           List<String> existingProperties = new ArrayList<String>(/*Arrays.asList("internalId","domid","lemma","link","word","partOfSpeech")*/);
+           List<String> existingProperties = new ArrayList<String>();
            for(int i = 1; i < featValues.length; i++){
                if(languageProperties.containsKey(featValues[i])){
                    existingProperties.add(languageProperties.get(featValues[i]));

@@ -154,12 +154,11 @@ public class DatabaseHelper {
 
     public static void truncateTable(String tableName){
         try {
-            Statement trunkate = (Statement) c.createStatement();
-            PreparedStatement ptruncateWords = (PreparedStatement) c.prepareStatement("TRUNCATE TABLE "+tableName);
+            PreparedStatement truncateStatement = (PreparedStatement) c.prepareStatement("TRUNCATE TABLE "+tableName);
             try{
-            ptruncateWords.executeUpdate();
+            truncateStatement.executeUpdate();
             } finally {
-                ptruncateWords.close();
+                truncateStatement.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();

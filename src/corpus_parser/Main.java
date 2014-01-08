@@ -38,6 +38,8 @@ public class Main {
         StatsManagement.writeStats(resultsPath, true);
 
         ////////////////////////////////////////////////////////////
+        //переместить в статсМенеджмент
+        ///////////////////////////////////////////////////////////
 
         /*final File folderITA = new File("C:\\corpus\\corpus_ita");
         String resultsPath = "C:\\corpus_stats\\results_ita.csv";
@@ -50,7 +52,7 @@ public class Main {
 
         StatsManagement.getStats(folderSW, StatsManagement.CorpusLanguage.SWEDISH, dbhelper);
         StatsManagement.writeStats(resultsPath, true);*/
-        /*final File folderITA = new File("C:\\corpus\\corpus_deu");
+        /*final File folderGER = new File("C:\\corpus\\corpus_deu");
         String resultsPath = "C:\\corpus_stats\\results_deu.csv";
 
         StatsManagement.getStats(folderITA, StatsManagement.CorpusLanguage.DEUTSCH, dbhelper);

@@ -193,10 +193,10 @@ public class ParserRU extends Parser {
 
                 if(word.id < parent.id) {
                     String delimiter = "<";
-                    bigram = word.featValues[0] + delimiter + parent.featValues[0];
+                    bigram = word.partOfSpeech + delimiter + parent.partOfSpeech;
                 } else {
                     String delimiter = ">";
-                    bigram = parent.featValues[0] + delimiter + word.featValues[0];
+                    bigram = parent.partOfSpeech + delimiter + word.partOfSpeech;
                 }
 
                 if (StatsManagement.stats.containsKey(bigram)) {

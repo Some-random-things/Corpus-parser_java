@@ -1,7 +1,6 @@
 package corpus_parser.deutsch;
 
 import corpus_parser.*;
-import corpus_parser.italian.WordITA;
 
 import java.io.*;
 import java.util.*;

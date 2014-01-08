@@ -1,10 +1,10 @@
 package corpus_parser;
 
-import corpus_parser.deutsch.ParserGER;
 import corpus_parser.finnish.ParserFI;
 import corpus_parser.italian.ParserITA;
 import corpus_parser.russian.ParserRU;
 import corpus_parser.swedish.ParserSW;
+import corpus_parser.deutsch.ParserGER;
 
 import java.io.BufferedWriter;
 import java.io.File;
